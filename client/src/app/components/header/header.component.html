@@ -1,0 +1,26 @@
+<p>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1>RonShop</h1>
+      <span class="spacer"></span>
+      Welcome, Guest
+      <button mat-icon-button [matMenuTriggerFor]="contact" aria-label="Toggle Contact" matTooltip="Contact Info">
+        <mat-icon>contact_support</mat-icon>
+      </button>
+      <mat-menu #contact="matMenu" xPosition="before">
+        <a mat-menu-item href="mailto:ron.strauss.work@gmail.com" target="_blank"><mat-icon>email</mat-icon>ron.strauss.work@gmail.com</a>
+        <a mat-menu-item href="tel:+972528249188"><mat-icon>call</mat-icon>+972 52 8249188</a>
+      </mat-menu>
+    </mat-toolbar-row>
+
+    <!-- <mat-toolbar-row *ngIf="shouldAppBarShow">
+      <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <button mat-icon-button aria-label="search icon">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-toolbar-row> -->
+  </mat-toolbar>
+</p>

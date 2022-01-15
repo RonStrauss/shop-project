@@ -1,0 +1,46 @@
+<div>
+  <mat-grid-list cols="3" rowHeight="89vh">
+    <mat-grid-tile rowspan="1" colspan="1" align="center">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Login / Proceed to Shop
+          </mat-card-title>
+        </mat-card-header>
+        One
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="1" colspan="1" align="center">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Why You Should Choose Us
+          </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29udmVuaWVuY2UlMjBzdG9yZXxlbnwwfHwwfHw%3D&w=1000&q=80">
+        <mat-card-content>
+          <h3>
+            We have the best prices and service in the market!
+          </h3>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="1" colspan="1" align="center">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Some Stats
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-icon>inventory_2</mat-icon><h3>Total Products Available: {{_dashboard.totalProducts}}</h3>
+          <mat-icon>shopping_cart</mat-icon><h3> Total Orders So Far: {{_dashboard.totalOrders}}</h3>
+          <!-- <div class="footer">
+            <p>Hello Guest.</p>
+            <p>Please Login or Register.</p>
+          </div> -->
+          </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
