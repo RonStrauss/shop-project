@@ -1,36 +1,75 @@
-<mat-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+<h1>Register a New Account</h1>
+<mat-divider></mat-divider>
+<mat-stepper  #stepper orientation="vertical">
+  <mat-step [stepControl]="firstFormGroup">
+
+    <!-- First Step -->
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>User Credentials</ng-template>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>ID Number</mat-label>
+          <input matInput placeholder="EX: 123456782" formControlName="_id" required maxlength="9">
+          <mat-error *ngIf="firstFormGroup.invalid">{{getIDErrorMessage()}}</mat-error>
         </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-      <form [formGroup]="secondFormGroup">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Your@email.here" formControlName="email" required>
+          <mat-error *ngIf="firstFormGroup.invalid">{{getEmailErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Make it unique!" formControlName="password" required>
+          <mat-error *ngIf="firstFormGroup.invalid">{{getPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput placeholder="Re-type" formControlName="confirmPassword" required>
+          <mat-error *ngIf="firstFormGroup.invalid">{{getPasswordErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button matStepperNext [disabled]="firstFormGroup.invalid">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Address & Name">
+
+    <!-- Second Step -->
+    <form [formGroup]="secondFormGroup">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <mat-select required formControlName="city">
+            <mat-option matInput *ngFor="let city of _lists.cities" [value]="city">{{city}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="secondFormGroup.invalid">You must enter a value</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Address</mat-label>
-          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                 required>
+          <input matInput formControlName="street" placeholder="Ha'Masger 27" required>
+          <mat-error *ngIf="secondFormGroup.invalid">You must enter a value</mat-error>
         </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" placeholder="Peter" required>
+          <mat-error *ngIf="secondFormGroup.invalid">You must enter a value</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" placeholder="Parker" required>
+          <mat-error *ngIf="secondFormGroup.invalid">You must enter a value</mat-error>
+        </mat-form-field>
+      </div>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button matStepperNext [disabled]="secondFormGroup.invalid">Submit</button>
+        <button mat-button (click)="stepper.reset()" color="accent">Reset</button>
       </div>
-    </mat-step>
-  </mat-stepper>
-  
+    </form>
+  </mat-step>
+</mat-stepper>

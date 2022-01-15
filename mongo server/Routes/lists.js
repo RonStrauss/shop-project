@@ -15,18 +15,18 @@ router.get("/orders-and-products-count", async (req, res) => {
 	}
 });
 
-router.use(onlyLoggedIn)
-
 router.get("/cities", async (req, res) => {
 	try {
 		const cities = await City.find({}, { __v: 0 });
-
+		
 		res.send(cities.map(cit => cit._id));
 	} catch (e) {
 		console.log(e);
 		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
 	}
 });
+
+router.use(onlyLoggedIn)
 
 router.get("/products-categories", async (req, res) => {
 	try {

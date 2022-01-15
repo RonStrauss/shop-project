@@ -1,4 +1,5 @@
 const { validate } = require('email-validator');
+const israeliIdValidator = require('israeli-id-validator');
 const onlyUsers = require('../HelpersExpress/onlyUsers');
 const { User, City } = require('../Schemas/AllSchemas');
 
@@ -25,17 +26,34 @@ router.post('/login', async (req, res) => {
 	}
 });
 
+router.post("/isCredentialInUse", async (req, res) => {
+	try {
+		const {_id, email} = req.body
+
+		if (!_id && !email) return res.status(400).send({err:true,msg:"What are you trying to check lol"})
+
+		const user = await User.find(_id ? {_id} : {email} ).countDocuments();
+		
+
+		res.send({ credentialInUser : user });
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+	}
+});
+
 router.post('/register', async (req, res) => {
 	try {
 		const { email, _id, password, first, last, city, street } = req.body;
 
 		if (!email || !password || !_id || !first || !last || !city || !street) return res.status(400).send({ err: true, msg: 'Missing parameters' });
 
+		if (!validate(email) || !israeliIdValidator(_id)) return res.status(400).send({ err: true, msg: 'Not gonna work bruh' });
+
 		const user = await User.find({ $or: [{ _id }, { email }] });
 
 		if (user.length) return res.status(400).send({ err: true, msg: 'Something failed.' });
 
-		if (!validate(email)) return res.status(400).send({ err: true, msg: 'Not gonna work bruh' });
 
 		const isCityInList = await City.findById(city);
 
