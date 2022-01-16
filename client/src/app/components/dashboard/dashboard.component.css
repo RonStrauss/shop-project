@@ -1,5 +1,5 @@
 mat-card {
-  height: 80vh;
+  height: 83vh;
   width: 29vw;
   background-color: #3f51b5;
   color: #fff;
@@ -15,4 +15,5 @@ mat-card {
 .footer{
   margin-top: 10rem;
   width: 100%;
+  color: rgb(255, 255, 179);
 }

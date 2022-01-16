@@ -34,7 +34,7 @@ router.put('/new', async (req, res) => {
 
 		const cart = await ShoppingCart.create({ userID: user._id });
 		await User.findByIdAndUpdate(user._id, { $push: { carts: cart._id } });
-		const userUpdatedWithCart = await User.findById(user._id, { __v: 0, password: 0 }).populate({ path: 'carts', populate: { path: 'orderID' } });
+		const userUpdatedWithCart = await User.findById(user._id, { __v: 0, password: 0 }).populate({ path: 'carts', select:{__v:0}, populate: { path: 'orderID', select:{__v:0} } });
 		req.session.user = userUpdatedWithCart;
 
 		res.send(cart);
@@ -132,7 +132,7 @@ router.delete('/empty-cart', async (req, res) => {
 	}
 });
 
-// TODO add credit card validation | connect date validation | city validation
+// TODO add credit card validation | connect date validation
 
 router.post('/pay', async (req, res) => {
 	try {
@@ -148,11 +148,14 @@ router.post('/pay', async (req, res) => {
 		if (populatedCart.userID != user._id) return res.status(403).send({ err: true, msg: "You can't edit other users carts!" });
 
 		const createdOrder = await Order.create({
+			userID: user._id,
 			cartID: populatedCart._id,
 			total: populatedCart.total,
 			shipping: { city, street, date },
 			lastFourCardDigits,
 		});
+
+		await ShoppingCart.findByIdAndUpdate(populatedCart._id, {orderID:createdOrder._id})
 
 		res.send(createdOrder);
 	} catch (e) {

@@ -4,10 +4,13 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            Login / Proceed to Shop
+            {{_auth.user ?  "Hello, "+ _auth.user.name?.first+'.' : 'Welcome, Please Login.'}}
           </mat-card-title>
         </mat-card-header>
-        <a routerLink="/register">Create a New Account</a>
+        <app-login *ngIf="!_auth.user"></app-login>
+        <div *ngIf="_auth.user">
+          <a mat-raised-button routerLink="/cart">{{getPurchaseButtonMessage()}}</a>
+        </div>
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile rowspan="1" colspan="1" align="center">
@@ -35,10 +38,9 @@
         <mat-card-content>
           <mat-icon>inventory_2</mat-icon><h3>Total Products Available: {{_dashboard.totalProducts}}</h3>
           <mat-icon>shopping_cart</mat-icon><h3> Total Orders So Far: {{_dashboard.totalOrders}}</h3>
-          <!-- <div class="footer">
-            <p>Hello Guest.</p>
-            <p>Please Login or Register.</p>
-          </div> -->
+          <div class="footer" *ngIf="_auth.user">
+            {{getNotificationMessage()}}
+          </div>
           </mat-card-content>
       </mat-card>
     </mat-grid-tile>

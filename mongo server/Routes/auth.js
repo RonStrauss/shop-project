@@ -11,9 +11,8 @@ router.post('/login', async (req, res) => {
 
 		if (!email || !password) return res.status(400).send({ err: true, msg: 'Missing Username Or Password' });
 
-		const user = await User.find({ email: email.toLowerCase(), password }, { __v: 0, password: 0 })
-			.slice('orders', -1)
-			.populate({ path: 'carts', populate: { path: 'orderID' } });
+		const user = await User.find({ email, password }, { __v: 0, password: 0, 'carts':{$slice: -1} })
+			.populate({ path: 'carts',select:{__v:0}, populate: { path: 'orderID', select:{__v:0, total:0, cartID:0} } });
 
 		if (!user.length) return res.status(400).send({ err: true, msg: 'Wrong Username Or Password' });
 
@@ -59,7 +58,7 @@ router.post('/register', async (req, res) => {
 
 		if (!isCityInList) return res.status(400).send({ err: true, msg: "Whoops! That shouldn't have happened.." });
 
-		await User.create({ email, _id, password, name: { first, last }, address: { city, street } });
+		await User.create({ email:email.toLowerCase(), _id, password, name: { first, last }, address: { city, street } });
 
 		return res.sendStatus(201);
 	} catch (e) {

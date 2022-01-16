@@ -1,0 +1,17 @@
+form {
+    background-color: #fff;
+    padding: 2rem;
+    color:black;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+div > button, a {
+    margin-top: 1rem;
+}
+
+a {
+    padding: 0.5rem 1rem;
+}

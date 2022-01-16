@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { customValidators } from 'src/app/services/custom-validators.service';
 import { ListsService } from 'src/app/services/lists.service';
 
@@ -15,7 +16,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _customValidators: customValidators,
-    public _lists:ListsService
+    private _auth: AuthService,
+    public _lists: ListsService
   ) {}
 
   ngOnInit() {
@@ -32,10 +34,13 @@ export class RegisterComponent implements OnInit {
             Validators.required,
             Validators.pattern(this._customValidators.emailRegex),
           ],
-          this._customValidators.isEmailAlreadyRegistered
+          this._customValidators.isEmailAlreadyRegistered,
         ],
-        password: ['', [Validators.required,this._customValidators.passCheckTest]],
-        confirmPassword: ['', [Validators.required,this._customValidators.confirmPassCheckTest]],
+        password: ['', [Validators.required]],
+        confirmPassword: [
+          '',
+          [Validators.required, this._customValidators.confirmPassCheckTest],
+        ],
       },
       { validator: this._customValidators.checkPasswords }
     );
@@ -53,18 +58,18 @@ export class RegisterComponent implements OnInit {
       return 'You must enter a value';
     if (this.firstFormGroup.hasError('copiedID', '_id'))
       return "Can't choose that ID";
-      if (this.firstFormGroup.hasError('IDInUse', '_id'))
-      return "ID already in use";
-      return this.firstFormGroup.hasError('invalidID', '_id')
+    if (this.firstFormGroup.hasError('IDInUse', '_id'))
+      return 'ID already in use';
+    return this.firstFormGroup.hasError('invalidID', '_id')
       ? 'Invalid ID Number'
       : '';
-    }
-    
-    getEmailErrorMessage() {
-      if (this.firstFormGroup.hasError('required', 'email'))
+  }
+
+  getEmailErrorMessage() {
+    if (this.firstFormGroup.hasError('required', 'email'))
       return 'You must enter a value';
-      if (this.firstFormGroup.hasError('EmailInUse', 'email'))
-        return "Email already in use";
+    if (this.firstFormGroup.hasError('EmailInUse', 'email'))
+      return 'Email already in use';
 
     return this.firstFormGroup.hasError('pattern', 'email')
       ? 'Not a valid email'
@@ -72,14 +77,29 @@ export class RegisterComponent implements OnInit {
   }
 
   getPasswordErrorMessage() {
-    if (this.firstFormGroup.hasError('notSame','password') || this.firstFormGroup.hasError('notSame','confirmPassword')) return 'Passwords must match'
+    if (
+      this.firstFormGroup.hasError('notSame', 'password') ||
+      this.firstFormGroup.hasError('notSame', 'confirmPassword')
+    )
+      return 'Passwords must match';
     return this.firstFormGroup.hasError('required', 'password') ||
       this.firstFormGroup.hasError('required', 'confirmPassword')
       ? 'You must enter a value'
       : null;
   }
 
-  getSecondGroupError(){
-   return this.secondFormGroup.invalid ? 'You must enter a value' : null;
+  getSecondGroupError() {
+    return this.secondFormGroup.invalid ? 'You must enter a value' : null;
+  }
+
+  register() {
+    const { email, _id, password } = this.firstFormGroup.value;
+    const {
+      firstName: first,
+      lastName: last,
+      city,
+      street,
+    } = this.secondFormGroup.value;
+    this._auth.register({ email, _id, password, first, last, city, street });
   }
 }

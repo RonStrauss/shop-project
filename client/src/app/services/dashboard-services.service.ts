@@ -16,4 +16,5 @@ export class DashboardServicesService {
     this.totalOrders = data.orders
     this.totalProducts = data.products
   }
+  
 }

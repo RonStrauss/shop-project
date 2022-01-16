@@ -1,6 +1,7 @@
 <h1>Register a New Account</h1>
 <mat-divider></mat-divider>
-<mat-stepper  #stepper orientation="vertical">
+<a routerLink="../" mat-raised-button color="primary">Login Instead</a>
+<mat-stepper linear #stepper orientation="vertical">
   <mat-step [stepControl]="firstFormGroup">
 
     <!-- First Step -->
@@ -67,7 +68,7 @@
       </div>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext [disabled]="secondFormGroup.invalid">Submit</button>
+        <button mat-button matStepperNext (click)="register()" [disabled]="secondFormGroup.invalid">Submit</button>
         <button mat-button (click)="stepper.reset()" color="accent">Reset</button>
       </div>
     </form>

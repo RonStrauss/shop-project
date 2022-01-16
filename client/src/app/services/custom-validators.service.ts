@@ -72,11 +72,5 @@ confirmPassCheckTest(control:AbstractControl){
   return pass === control.value ? null : { notSame: true }
 }
 
-passCheckTest(control:AbstractControl){
-  const pass = control.parent?.get('confirmPassword')!.value
-
-  return pass === control.value ? null : { notSame: true }
-}
-
 
 }
