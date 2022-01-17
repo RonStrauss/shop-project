@@ -30,7 +30,7 @@ router.get("/cities", async (req, res) => {
 
 router.get("/products-categories", async (req, res) => {
 	try {
-		const products = await Product.find({}, { __v: 0 }).populate("categoryID");
+		const products = await Product.find({}, { __v: 0 }).populate("categoryID", {__v:0});
 		res.send(products);
 	} catch (e) {
 		console.log(e);

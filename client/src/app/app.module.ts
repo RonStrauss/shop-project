@@ -11,9 +11,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ShopMainComponent } from './components/shop-main/shop-main.component';
+import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
+import { ShopProductsComponent } from './components/shop-products/shop-products.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
