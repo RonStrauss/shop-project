@@ -26,7 +26,7 @@ router.get("/cities", async (req, res) => {
 	}
 });
 
-router.use(onlyLoggedIn)
+// router.use(onlyLoggedIn)
 
 router.get("/products-categories", async (req, res) => {
 	try {

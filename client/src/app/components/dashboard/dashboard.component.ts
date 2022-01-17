@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getPurchaseButtonMessage(): string{
-    if (this._auth.user) return this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length ? "Open a new cart":"Continue your ongoing order"
+    if (this._auth.user) return this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length ? "Start a new purchase":"Continue your purchase"
     
     return "I should never return"
   }

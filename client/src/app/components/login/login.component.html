@@ -1,14 +1,16 @@
+<!-- TODO:add auto-complete to inputs -->
+
 <form [formGroup]="loginForm" (submit)="submit()">
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input matInput placeholder="your@email.here" formControlName="email" required autocomplete="email">
+    <input matInput placeholder="your@email.here" formControlName="email" required>
     <mat-error *ngIf="loginForm.invalid">You must enter a value.</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
     <input matInput placeholder="Enter your password" formControlName="password" required
-      [type]="hide ? 'password' : 'text'" autocomplete="current-password">
+      [type]="hide ? 'password' : 'text'">
     <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
       [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -19,4 +21,4 @@
     <button mat-raised-button type="submit" [disabled]="loginForm.invalid" color="primary">Login</button>
   </div>
 </form>
-<a routerLink="/register" mat-stroked-button >Register a New Account</a>
+<a routerLink="/register" mat-stroked-button>Register a New Account</a>

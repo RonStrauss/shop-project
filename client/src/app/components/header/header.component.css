@@ -1,3 +1,19 @@
 .spacer {
     flex: 1 1 auto
 }
+
+h1 {
+    cursor: pointer;
+    user-select: none;
+}
+
+.search-row {
+    justify-content: center;
+    height: 5vh;
+    font-size: smaller;
+}
+
+#product-search-placeholder::placeholder{
+    
+    color: hsl(231, 31%, 61%);
+}

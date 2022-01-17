@@ -1,6 +1,6 @@
 const { validate } = require('email-validator');
 const israeliIdValidator = require('israeli-id-validator');
-const onlyUsers = require('../HelpersExpress/onlyUsers');
+const onlyLoggedIn = require('../HelpersExpress/onlyLoggedIn');
 const { User, City } = require('../Schemas/AllSchemas');
 
 const router = require('express').Router();
@@ -62,13 +62,18 @@ router.post('/register', async (req, res) => {
 
 		return res.sendStatus(201);
 	} catch (e) {
-		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed...\n' + e.message });
+		console.log(e.message);
+		res.status(500).send({ err: true, msg: 'Server failed... Please try again later'});
 	}
 });
 
-router.delete('/logout', onlyUsers, (req, res) => {
+router.delete('/logout', onlyLoggedIn, (req, res) => {
+	try {
 	req.session.destroy();
+	res.send({msg:"Logged out successfully"})
+} catch (e) {
+	console.log(e.message);
+	res.status(500).send({ err: true, msg: 'Server failed... Please try again later'});
+}
 });
-
 module.exports = router;

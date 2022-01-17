@@ -45,4 +45,15 @@ export class AuthService {
       alert(data.msg);
     }
   }
+
+  async logout(){
+    const res = await fetch('http://localhost:1000/auth/logout', {
+      method: 'delete',
+      credentials: 'include',
+    });
+    const data = await res.json();
+    this._snackBar.open(data.msg,"Ok")
+    this.user = false;
+    this._router.navigate([])
+  }
 }
