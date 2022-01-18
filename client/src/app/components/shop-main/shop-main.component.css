@@ -1,13 +1,16 @@
 .shop-main{
     width: 100%;
     display: grid;
-    height: 85vh;
+    height: 88vh;
     grid-template-areas: "a b";
     grid-template-columns: 1fr 3fr;
 }
 
 app-shop-cart {
     grid-template: "a";
+    border-right: 1px solid rgba(0,0,0,.12);
+    display: flex;
+    flex-direction: column;
     
 }
 

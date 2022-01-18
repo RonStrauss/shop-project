@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatAccordion } from '@angular/material/expansion';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,9 +9,13 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
   loginForm!: FormGroup
   hide = true
+  subscription!:Subscription
+
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
+
 
   constructor(public _formBuilder:FormBuilder,
     private _auth: AuthService,
@@ -20,11 +26,16 @@ export class LoginComponent implements OnInit {
       email:['', Validators.required],
       password:['', Validators.required]
     })
+    this.subscription=this.loginForm.valueChanges.subscribe(()=>{this.accordion.closeAll()})
+  }
+
+  ngOnDestroy(): void {
+      this.subscription.unsubscribe()
   }
 
   submit(){
     const {email, password} = this.loginForm.value
-    this._auth.login({email, password})
+    this._auth.login({email, password}, this.accordion)
   }
 
 }

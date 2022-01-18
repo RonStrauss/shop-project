@@ -292,13 +292,27 @@ async function initialDB() {
 			products = productsCount
 				? true
 				: await Product.insertMany([
-						{ name: 'Milk', categoryID: 'Dairy & Eggs', priceInteger: 8, priceDecimal: 90 },
-						{ name: 'Tomatoes', categoryID: 'Fresh Produce', priceInteger: 2, priceDecimal: 0, isInWeight: true },
+						{ name: 'Milk', categoryID: 'Dairy & Eggs', priceInteger: 8, priceDecimal: 90, imageURL: 'assets/Milk.png' },
+						{ name: 'Eggs (12)', categoryID: 'Dairy & Eggs', priceInteger: 12, priceDecimal: 60 },
+						{
+							name: 'Tomatoes',
+							categoryID: 'Fresh Produce',
+							priceInteger: 2,
+							priceDecimal: 0,
+							isInWeight: true,
+							imageURL: 'assets/Tomato.jpg',
+						},
 						{ name: 'Fresh Shrimp', categoryID: 'Meat & Fish', priceInteger: 39, priceDecimal: 90, isInWeight: true },
 						{ name: 'Fresh Baguette', categoryID: 'Bakery & Bread', priceInteger: 4, priceDecimal: 20 },
 						{ name: 'Frozen Pizza', categoryID: 'Frozen', priceInteger: 26, priceDecimal: 50 },
-						{ name: 'Bamba (Peanut & Corn Snack)', categoryID: 'Snacks & Candy', priceInteger: 4, priceDecimal: 0 },
-						{ name: 'Coca Cola (1.5L)', categoryID: 'Beverage', priceInteger: 7, priceDecimal: 0 },
+						{
+							name: 'Bamba (Peanut & Corn Snack)',
+							categoryID: 'Snacks & Candy',
+							priceInteger: 4,
+							priceDecimal: 0,
+							imageURL: 'assets/Bamba.jpg',
+						},
+						{ name: 'Coca Cola (1.5L)', categoryID: 'Beverages', priceInteger: 7, priceDecimal: 0 },
 						{ name: 'Canned Olives', categoryID: 'Canned & Jarred', priceInteger: 4, priceDecimal: 75 },
 						{ name: 'Scented Bleach', categoryID: 'Cleaners & Personal Hygiene', priceInteger: 12, priceDecimal: 60 },
 						{ name: 'Toilet Paper', categoryID: 'Household Items', priceInteger: 25, priceDecimal: 20 },

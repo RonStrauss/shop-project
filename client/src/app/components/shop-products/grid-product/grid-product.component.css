@@ -1,0 +1,39 @@
+.wrapper {
+    display: flex;
+    
+    align-items: center;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.left mat-form-field{
+    width: 40%;
+}
+
+img {
+    max-width: 7rem;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  display: none;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.name {
+    font-size: large;
+    padding-bottom: 0.5rem;
+}
+
+.quantity{
+    text-align: center;
+}

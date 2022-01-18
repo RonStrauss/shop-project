@@ -1,1 +1,9 @@
-<p>shop-cart works!</p>
+<div class="header">
+  <mat-icon color="primary">shopping_cart</mat-icon> Cart <button mat-stroked-button color="primary">Pay</button>
+</div>
+<mat-divider></mat-divider>
+<div class="product-list"></div>
+<mat-divider></mat-divider>
+<div class="footer">
+  <h3>Total: {{(_auth.user) && _auth.user.carts[0]?.total}}$</h3>
+</div>

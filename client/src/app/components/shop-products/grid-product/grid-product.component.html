@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <div class="left">
+    <div class="name">{{product.name}}</div>
+    <div class="mat-body-1"><em>{{product.priceInteger + '.' + product.priceDecimal}}</em></div>
+    <form [formGroup]="quantity">
+        <mat-form-field>
+            <input matInput type="number" formControlName="number" readonly class="quantity">
+            <button matSuffix mat-icon-button [disabled]="quantity.get('number')?.value == 50" (click)="increment()"><mat-icon>add</mat-icon></button>
+            <button matPrefix mat-icon-button [disabled]="quantity.get('number')?.value == 0" (click)="decrement()"><mat-icon>remove</mat-icon></button>
+            <mat-error *ngIf="quantity.invalid">Illegal Quantity</mat-error>
+            <mat-hint align="end" *ngIf="product.isInWeight">Kg</mat-hint>
+        </mat-form-field>
+        <button mat-stroked-button color="primary" *ngIf="valueChanged">Update Cart</button>
+    </form>
+  </div>
+  <div class="right">
+    <img [src]="product.imageURL" [alt]="product.name">
+  </div>
+
+</div>

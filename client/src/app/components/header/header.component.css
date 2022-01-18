@@ -7,10 +7,13 @@ h1 {
     user-select: none;
 }
 
+mat-toolbar {
+    height: 12vh;
+}
+
 .search-row {
     justify-content: center;
-    height: 5vh;
-    font-size: smaller;
+    font-size: small;
 }
 
 #product-search-placeholder::placeholder{

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatAccordion } from '@angular/material/expansion';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Login } from '../components/login/login';
@@ -28,7 +29,7 @@ export class AuthService {
     }
   }
 
-  async login(object: Login) {
+  async login(object: Login, expansion:MatAccordion) {
     const res = await fetch('http://localhost:1000/auth/login', {
       method: 'post',
       credentials: 'include',
@@ -42,7 +43,7 @@ export class AuthService {
       });
       this.user = data;
     } else {
-      alert(data.msg);
+      expansion.openAll()
     }
   }
 

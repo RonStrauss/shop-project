@@ -34,10 +34,11 @@ router.put('/new', async (req, res) => {
 
 		const cart = await ShoppingCart.create({ userID: user._id });
 		await User.findByIdAndUpdate(user._id, { $push: { carts: cart._id } });
-		const userUpdatedWithCart = await User.findById(user._id, { __v: 0, password: 0 }).populate({ path: 'carts', select:{__v:0}, populate: { path: 'orderID', select:{__v:0} } });
+		const userUpdatedWithCart = await User.findById(user._id, { __v: 0, password: 0, 'carts':{$slice: -1} })
+		.populate({ path: 'carts',select:{__v:0}, populate: { path: 'orderID', select:{__v:0, total:0, cartID:0} } });
 		req.session.user = userUpdatedWithCart;
 
-		res.send(cart);
+		res.send(userUpdatedWithCart);
 	} catch (e) {
 		console.log(e);
 		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });

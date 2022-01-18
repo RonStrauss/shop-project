@@ -1,5 +1,5 @@
 <div>
-  <mat-grid-list cols="3" rowHeight="89vh">
+  <mat-grid-list cols="3" rowHeight="88vh">
     <mat-grid-tile rowspan="1" colspan="1" align="center">
       <mat-card>
         <mat-card-header>
@@ -9,7 +9,7 @@
         </mat-card-header>
         <app-login *ngIf="!_auth.user"></app-login>
         <div *ngIf="_auth.user">
-          <a mat-raised-button routerLink="/cart">{{getPurchaseButtonMessage()}}</a>
+          <button mat-raised-button (click)="_dashboard.openNewCartAndNavigate()">{{getPurchaseButtonMessage()}}</button>
         </div>
       </mat-card>
     </mat-grid-tile>

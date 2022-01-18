@@ -1,0 +1,16 @@
+.header {
+    height: 3rem;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.product-list{
+flex: 1;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}

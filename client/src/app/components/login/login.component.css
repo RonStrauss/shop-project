@@ -15,3 +15,7 @@ div > button, a {
 a {
     padding: 0.5rem 1rem;
 }
+
+mat-expansion-panel + .mat-expansion-panel-body {
+    color: red;
+}
