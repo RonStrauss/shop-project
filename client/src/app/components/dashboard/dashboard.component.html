@@ -9,7 +9,7 @@
         </mat-card-header>
         <app-login *ngIf="!_auth.user"></app-login>
         <div *ngIf="_auth.user">
-          <button mat-raised-button (click)="_dashboard.openNewCartAndNavigate()">{{getPurchaseButtonMessage()}}</button>
+          <button mat-raised-button (click)="_dashboard.openNewCartAndNavigate()" autofocus>{{getPurchaseButtonMessage()}}</button>
         </div>
       </mat-card>
     </mat-grid-tile>

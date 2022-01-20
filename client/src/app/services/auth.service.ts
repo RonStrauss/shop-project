@@ -55,6 +55,6 @@ export class AuthService {
     const data = await res.json();
     this._snackBar.open(data.msg,"Ok")
     this.user = false;
-    this._router.navigate([])
+    this._router.navigateByUrl('/')
   }
 }

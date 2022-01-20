@@ -1,3 +1,5 @@
+import { Product } from "../components/shop-main/product";
+
 export interface User {
   name: {
     first: string;

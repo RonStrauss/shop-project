@@ -1,22 +1,22 @@
 .spacer {
-    flex: 1 1 auto
+  flex: 1 1 auto
 }
 
 h1 {
-    cursor: pointer;
-    user-select: none;
+  cursor: pointer;
+  user-select: none;
 }
 
 mat-toolbar {
-    height: 12vh;
+  max-height: 12vh;
 }
 
 .search-row {
-    justify-content: center;
-    font-size: small;
+  justify-content: center;
+  font-size: small;
 }
 
-#product-search-placeholder::placeholder{
-    
-    color: hsl(231, 31%, 61%);
+#product-search-placeholder::placeholder {
+
+  color: hsl(231, 31%, 61%);
 }

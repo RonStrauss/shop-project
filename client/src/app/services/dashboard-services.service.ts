@@ -21,9 +21,10 @@ export class DashboardServicesService {
   }
 
   async openNewCartAndNavigate() {
-    if (
-      this._auth.user &&
-      (this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length)
+    if (this._auth.user){
+
+      if (
+        (this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length)
     ) {
       const res = await fetch('http://localhost:1000/cart/new', {
         method: 'put',
@@ -32,10 +33,13 @@ export class DashboardServicesService {
       const data = await res.json();
       if (!data.err) {
         this._auth.user = data;
-        this._router.navigateByUrl('/cart')
       } else {
         alert(data.msg)
       }
     }
+    this._router.navigateByUrl('/cart')
+  } else {
+    alert('Whoops! Please refresh page and re-login 🤭')
+  }
   }
 }
