@@ -2,7 +2,11 @@
   <mat-icon color="primary">shopping_cart</mat-icon> Cart <button mat-stroked-button color="primary">Pay</button>
 </div>
 <mat-divider></mat-divider>
-<div class="product-list"></div>
+<div class="product-list">
+  <mat-list role="cell">
+    <mat-list-item role="listitem" *ngFor="let item of internalProductList">item.</mat-list-item>
+  </mat-list>
+</div>
 <mat-divider></mat-divider>
 <div class="footer">
   <h3>Total: {{(_auth.user) && _auth.user.carts[0]?.total}}$</h3>

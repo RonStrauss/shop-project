@@ -43,6 +43,8 @@ export class GridProductComponent implements OnInit,OnDestroy {
             
           }
           console.log(itemInCart)
+          } else {
+            this.valueChanged = this.quantity.get('number')?.value ? true : false
           }
       }});
   }
@@ -76,7 +78,8 @@ export class GridProductComponent implements OnInit,OnDestroy {
             this.valueChanged = Boolean(val.number)
             
           }
-          console.log(itemInCart)
+          } else {
+            this.valueChanged = this.quantity.get('number')?.value ? true : false
           }
       }})
 

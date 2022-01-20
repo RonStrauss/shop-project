@@ -48,8 +48,6 @@ router.put("/new", async (req, res) => {
 	}
 });
 
-//TODO - fix pull from array not working for 0 quantity
-
 router.put("/product/:productID", async (req, res) => {
 	try {
 		const { user } = req.session;
@@ -82,8 +80,8 @@ router.put("/product/:productID", async (req, res) => {
 		});
 
 		if (item) {
-			if (!requestedQuantity) {
-				await ShoppingCart.updateOne({ "items._id": item._id }, { $pull: { items: { _id: item._id } } });
+			if (requestedQuantity == 0) {
+				await ShoppingCart.updateOne({ "items._id": item._id }, { $pull: { items: { _id: item._id, productID,quantity:item.quantity } } });
 			} else {
 				await ShoppingCart.updateOne({ "items._id": item._id }, { $set: { "items.$.quantity": requestedQuantity } });
 			}

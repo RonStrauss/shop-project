@@ -37,3 +37,8 @@ form{
 .quantity{
     text-align: center;
 }
+
+.update-quantity-button{
+    position: absolute;
+    bottom: 0;
+}
