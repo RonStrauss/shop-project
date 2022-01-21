@@ -16,12 +16,14 @@
     </mat-menu>
   </mat-toolbar-row>
   <mat-toolbar-row class="search-row" *ngIf="_router.url.includes('cart')">
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input matInput placeholder="Product name" id="product-search-placeholder">
-      <button mat-icon-button type="button" matSuffix>
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Product name" id="product-search-placeholder" formControlName='query'>
+        <button mat-icon-button type="button" matSuffix>
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
   </mat-toolbar-row>
 </mat-toolbar>

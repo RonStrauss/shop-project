@@ -1,4 +1,4 @@
-import { Product } from '../components/shop-main/product';
+import { Product } from './product';
 
 export interface User {
   name: {

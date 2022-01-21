@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CartItem } from '../components/shop-cart/cart-item';
+import { CartItem } from '../interfaces/cart-item';
 import { AuthService } from './auth.service';
 import { ShopService } from './shop.service';
 
@@ -38,6 +38,18 @@ export class CartService {
       [];
     } else {
       alert(data.msg);
+    }
+  }
+
+  async emptyCart(){
+    const res = await fetch(`http://localhost:1000/cart/empty-cart`, {
+        method: 'delete',
+        credentials: 'include',
+      });
+    const data = await res.json()
+    if (!data.err){
+      this.cartItems = []
+      this._auth.user = data
     }
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Login } from '../components/login/login';
+import { Login } from '../interfaces/login';
 import { Register } from '../interfaces/register';
 import { User } from '../interfaces/user';
 

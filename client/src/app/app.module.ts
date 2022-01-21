@@ -14,9 +14,10 @@ import { ShopMainComponent } from './components/shop-main/shop-main.component';
 import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
 import { ShopProductsComponent } from './components/shop-products/shop-products.component';
 import { GridProductComponent } from './components/shop-products/grid-product/grid-product.component';
+import { TotalItemPipe } from './pipes/total-item.pipe';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],

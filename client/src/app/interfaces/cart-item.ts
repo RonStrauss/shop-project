@@ -1,4 +1,4 @@
-import { Product } from "../shop-main/product";
+import { Product } from "./product";
 
 export interface CartItem{
     productID:Product,

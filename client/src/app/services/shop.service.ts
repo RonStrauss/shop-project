@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Product } from '../components/shop-main/product';
+import { Product } from '../interfaces/product';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,21 @@ export class ShopService {
       );
       console.log(this.categories)
       this.currentViewedProducts = this.products.filter(prd=>prd.categoryID._id===this.categories[0])
+    }
+  }
+
+  async searchProducts(query:string=''){
+    if (!query){
+      this.currentViewedProducts = this.products.filter(prd=>prd.categoryID._id===this.selectedCategory)
+    } else {
+
+      const res = await fetch('http://localhost:1000/lists/product-search?query='+query,{
+        credentials:'include'
+      })
+      const data = await res.json()
+      if (!data.err){
+        this.currentViewedProducts = [...data]
+      }
     }
   }
 

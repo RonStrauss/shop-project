@@ -4,16 +4,26 @@
     height: 88vh;
     grid-template-areas: "a b";
     grid-template-columns: 1fr 3fr;
+    position: relative;
 }
 
 app-shop-cart {
     grid-template: "a";
     border-right: 1px solid rgba(0,0,0,.12);
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column
 }
 
 app-shop-products{
     grid-template: "b";
+}
+
+.hide {
+    display: none;
+}
+
+.open-close-button{
+    position: absolute;
+    top:-3rem;
+    left:1rem;
 }

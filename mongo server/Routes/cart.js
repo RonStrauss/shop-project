@@ -81,7 +81,7 @@ router.put("/product/:productID", async (req, res) => {
 
 		if (item) {
 			if (requestedQuantity == 0) {
-				await ShoppingCart.updateOne({ "items._id": item._id }, { $pull: { items: { _id: item._id, productID,quantity:item.quantity } } });
+				await ShoppingCart.updateOne({ "items._id": item._id }, { $pull: { items: { _id: item._id, productID, quantity: item.quantity } } });
 			} else {
 				await ShoppingCart.updateOne({ "items._id": item._id }, { $set: { "items.$.quantity": requestedQuantity } });
 			}
@@ -123,12 +123,10 @@ router.delete("/empty-cart", async (req, res) => {
 
 		await ShoppingCart.findByIdAndUpdate(requestedCart._id, { $set: { items: [], total: 0 } });
 
-		requestedCart.items = [];
-		requestedCart.total = 0;
+		user.carts[0].items = []
+		user.carts[0].total = 0
 
-		req.session.user.carts[0] = requestedCart;
-
-		res.send(requestedCart);
+		res.send(user);
 	} catch (e) {
 		console.log(e);
 		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });

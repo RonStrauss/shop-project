@@ -1,27 +1,34 @@
 <div class="header">
-  <mat-icon color="primary">shopping_cart</mat-icon> Cart <button mat-stroked-button color="primary">Pay</button>
+  <mat-icon color="primary">shopping_cart</mat-icon> Cart <button mat-stroked-button color="accent"
+  *ngIf="(_auth.user) && _auth.user.carts[0]?.total" (click)="_cart.emptyCart()">Remove All</button>
 </div>
 <mat-divider></mat-divider>
 <div class="product-list">
-  <!-- <mat-selection-list role="list" multiple="false" (selectionChange)="func($event)" #selection>
-    <mat-list-option role="listitem" *ngFor="let item of internalProductList;let i = index">{{item}}</mat-list-option>
-  </mat-selection-list> -->
-  <mat-accordion class="example-headers-align" multi>
+  <mat-accordion class="example-headers-align">
     <mat-expansion-panel *ngFor="let item of _cart.cartItems">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{item.productID.name}}
+          {{item.productID.name}} X {{item.quantity}}
+          <span *ngIf="item.productID.isInWeight" class="mat-caption">Kg</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
-
       <mat-action-row>
-        <button mat-button color="accent" (click)="_cart.updateCart(item._id,0)">Remove from cart</button>
+        <div class="total">
+          <span>Total:</span>
+          <span>
+            {{(item.quantity| totalItem:item.productID.priceInteger:item.productID.priceDecimal)}}
+          </span>
+        </div>
+        <button mat-button color="accent" (click)="_cart.updateCart(item.productID._id,0)">Remove from cart</button>
       </mat-action-row>
-  
+
     </mat-expansion-panel>
   </mat-accordion>
 </div>
 <mat-divider></mat-divider>
 <div class="footer">
-  <h3>Total: {{(_auth.user) && _auth.user.carts[0]?.total}}$</h3>
+  <div class="add" *ngIf="_auth.user && !_auth.user.carts[0]?.total">Add a product from the right <mat-icon color="primary">double_arrow</mat-icon></div>
+  <div *ngIf="_auth.user && _auth.user.carts[0]?.total">Total: {{(_auth.user) && _auth.user.carts[0]?.total}}$</div>
+  <button mat-raised-button color="primary"
+    *ngIf="(_auth.user) && _auth.user.carts[0]?.total">Pay</button>
 </div>

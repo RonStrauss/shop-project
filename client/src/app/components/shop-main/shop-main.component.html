@@ -1,4 +1,5 @@
-<div class="shop-main">
-  <app-shop-cart></app-shop-cart>
-  <app-shop-products></app-shop-products>
+<div class="shop-main" >
+  <app-shop-cart #cart [ngClass]="{'hide':hide}"></app-shop-cart>
+  <button mat-stroked-button class="open-close-button" #openClose (click)="hide = !hide">{{hide ? 'Show':'Hide'}} Cart<mat-icon>navigate_{{hide ? 'next':'before'}}</mat-icon></button>
+  <app-shop-products [hide]="hide"></app-shop-products>
 </div>

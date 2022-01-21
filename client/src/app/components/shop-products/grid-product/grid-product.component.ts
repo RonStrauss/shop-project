@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
-import { Product } from '../../shop-main/product';
+import { Product } from '../../../interfaces/product';
 
 @Component({
   selector: 'app-grid-product',
@@ -67,8 +67,6 @@ export class GridProductComponent implements OnInit,OnDestroy {
     this.valChangeSub = this.quantity.valueChanges.subscribe((val) => {
       if (this._auth.user) {
         if (this._auth.user.carts[0]?.items.length){
-          console.log(this.product._id)
-          console.log(this._auth.user.carts[0].items)
           const itemInCart = this._auth.user.carts[0].items.find(itm=>itm.productID == this.product._id)
           if (itemInCart){
             

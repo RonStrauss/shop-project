@@ -1,3 +1,11 @@
 mat-tab-group {
+    width: 100vw;
+}
+
+.with-cart{
     width: 80vw;
+}
+
+.no-products{
+    padding: 3rem;
 }
