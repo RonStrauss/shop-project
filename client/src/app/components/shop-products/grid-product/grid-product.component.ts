@@ -42,7 +42,6 @@ export class GridProductComponent implements OnInit,OnDestroy {
             this.valueChanged = Boolean(val.number)
             
           }
-          console.log(itemInCart)
           } else {
             this.valueChanged = this.quantity.get('number')?.value ? true : false
           }
@@ -62,7 +61,7 @@ export class GridProductComponent implements OnInit,OnDestroy {
   }
 
   changeProductQuantity(){
-    this._cart.addToCart(this.product._id,this.quantity.get('number')?.value)
+    this._cart.updateCart(this.product._id,this.quantity.get('number')?.value)
     
     this.valChangeSub.unsubscribe()
     this.valChangeSub = this.quantity.valueChanges.subscribe((val) => {

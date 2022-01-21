@@ -3,9 +3,23 @@
 </div>
 <mat-divider></mat-divider>
 <div class="product-list">
-  <mat-list role="cell">
-    <mat-list-item role="listitem" *ngFor="let item of internalProductList">item.</mat-list-item>
-  </mat-list>
+  <!-- <mat-selection-list role="list" multiple="false" (selectionChange)="func($event)" #selection>
+    <mat-list-option role="listitem" *ngFor="let item of internalProductList;let i = index">{{item}}</mat-list-option>
+  </mat-selection-list> -->
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let item of _cart.cartItems">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{item.productID.name}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-action-row>
+        <button mat-button color="accent" (click)="_cart.updateCart(item._id,0)">Remove from cart</button>
+      </mat-action-row>
+  
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
 <mat-divider></mat-divider>
 <div class="footer">
