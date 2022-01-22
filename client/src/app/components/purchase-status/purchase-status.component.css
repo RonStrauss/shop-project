@@ -1,0 +1,41 @@
+.purchase-main{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: calc(100vh - 4rem);
+}
+
+.cart,.pay {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart {
+    border-right: 1px solid rgba(0,0,0,.12);
+}
+
+.header,.footer {
+    min-height: 3rem;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    font-size: xx-large;
+    padding: 1rem;
+}
+
+.main{
+    flex: 1;
+    max-height: 77vh;
+    overflow: auto;
+}
+
+app-purchased-item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.pay {
+    height: 100%;
+}

@@ -29,6 +29,6 @@
 <div class="footer">
   <div class="add" *ngIf="_auth.user && !_auth.user.carts[0]?.total">Add a product from the right <mat-icon color="primary">double_arrow</mat-icon></div>
   <div *ngIf="_auth.user && _auth.user.carts[0]?.total">Total: {{(_auth.user) && _auth.user.carts[0]?.total}}$</div>
-  <button mat-raised-button color="primary"
-    *ngIf="(_auth.user) && _auth.user.carts[0]?.total">Pay</button>
+  <a mat-raised-button color="primary"
+    *ngIf="(_auth.user) && _auth.user.carts[0]?.total" routerLink="../purchase">Pay</a>
 </div>

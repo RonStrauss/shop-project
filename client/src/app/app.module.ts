@@ -15,9 +15,11 @@ import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
 import { ShopProductsComponent } from './components/shop-products/shop-products.component';
 import { GridProductComponent } from './components/shop-products/grid-product/grid-product.component';
 import { TotalItemPipe } from './pipes/total-item.pipe';
+import { PurchaseStatusComponent } from './components/purchase-status/purchase-status.component';
+import { PurchasedItemComponent } from './components/purchase-status/purchased-item/purchased-item.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
