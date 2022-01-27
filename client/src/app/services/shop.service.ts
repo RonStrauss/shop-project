@@ -6,13 +6,13 @@ import { Product } from '../interfaces/product';
 })
 export class ShopService {
   products: Product[] = [];
-  categories: string[] = ["Products"];
+  categories: string[] = ['Products'];
 
-  currentViewedProducts: Product[]=[];
+  currentViewedProducts: Product[] = [];
 
-  categoryChanged:EventEmitter<string> = new EventEmitter()
+  categoryChanged: EventEmitter<string> = new EventEmitter();
 
-  selectedCategory:string='Products'
+  selectedCategory: string = 'Products';
 
   constructor() {}
 
@@ -20,32 +20,32 @@ export class ShopService {
     const res = await fetch('http://localhost:1000/lists/products-categories');
     const data = await res.json();
     if (!data.err) {
-      console.log(data)
       this.products = data;
       this.categories = Array.from(
-        new Set(
-          data.map((product:Product) => product.categoryID._id)
-        )
+        new Set(data.map((product: Product) => product.categoryID._id))
       );
-      console.log(this.categories)
-      this.currentViewedProducts = this.products.filter(prd=>prd.categoryID._id===this.categories[0])
+      this.currentViewedProducts = this.products.filter(
+        (prd) => prd.categoryID._id === this.categories[0]
+      );
     }
   }
 
-  async searchProducts(query:string=''){
-    if (!query){
-      this.currentViewedProducts = this.products.filter(prd=>prd.categoryID._id===this.selectedCategory)
+  async searchProducts(query: string = '') {
+    if (!query) {
+      this.currentViewedProducts = this.products.filter(
+        (prd) => prd.categoryID._id === this.selectedCategory
+      );
     } else {
-
-      const res = await fetch('http://localhost:1000/lists/product-search?query='+query,{
-        credentials:'include'
-      })
-      const data = await res.json()
-      if (!data.err){
-        this.currentViewedProducts = [...data]
+      const res = await fetch(
+        'http://localhost:1000/lists/product-search?query=' + query,
+        {
+          credentials: 'include',
+        }
+      );
+      const data = await res.json();
+      if (!data.err) {
+        this.currentViewedProducts = [...data];
       }
     }
   }
-
-
 }

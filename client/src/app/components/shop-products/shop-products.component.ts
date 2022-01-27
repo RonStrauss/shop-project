@@ -13,8 +13,7 @@ export class ShopProductsComponent implements OnInit {
   @Input()hide!:boolean
 
   ngOnInit(): void {
-    this._shop.getProducts();
-    this._shop.categoryChanged.subscribe((val) => {
+        this._shop.categoryChanged.subscribe((val) => {
       this._shop.currentViewedProducts = this._shop.products.filter(
         (prd) => val == prd.categoryID._id
       );

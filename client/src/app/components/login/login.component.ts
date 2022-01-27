@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   constructor(public _formBuilder:FormBuilder,
     private _auth: AuthService,
+    private _shop:ShopService
     ) { }
 
   ngOnInit(): void {
@@ -29,9 +31,12 @@ export class LoginComponent implements OnInit,OnDestroy {
     this.subscription=this.loginForm.valueChanges.subscribe(()=>{this.accordion.closeAll()})
   }
 
+  // TODO move getProducts to cart component products.length == 0
+
   ngOnDestroy(): void {
       this.subscription.unsubscribe()
-  }
+      this._shop.getProducts()
+    }
 
   submit(){
     const {email, password} = this.loginForm.value

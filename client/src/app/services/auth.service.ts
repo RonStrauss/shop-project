@@ -10,7 +10,7 @@ import { User } from '../interfaces/user';
   providedIn: 'root',
 })
 export class AuthService {
-  user: User | false = false;
+  user: User | undefined ;
   constructor(public _router: Router, private _snackBar: MatSnackBar) {}
 
   async register(object: Register) {
@@ -54,7 +54,7 @@ export class AuthService {
     });
     const data = await res.json();
     this._snackBar.open(data.msg,"Ok")
-    this.user = false;
+    this.user = undefined;
     this._router.navigateByUrl('/')
   }
 }

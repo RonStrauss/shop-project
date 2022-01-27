@@ -10,12 +10,11 @@ export class customValidators {
 
   constructor() {}
 
-  isIsraeliIdValid(control:FormControl) {
-
-    if (!control.value) return null
+  isIsraeliIdValid(control: FormControl) {
+    if (!control.value) return null;
 
     let strId = control.value.trim();
-    if (strId === '123456782') return { 'copiedID': true }
+    if (strId === '123456782') return { copiedID: true };
     if (strId.length > 9) {
       return false;
     }
@@ -30,47 +29,63 @@ export class customValidators {
       actualVal = rawVal > 9 ? rawVal - 9 : rawVal;
       counter += actualVal;
     }
-    return counter % 10 === 0 ? null : { 'invalidID': true }
+    return counter % 10 === 0 ? null : { invalidID: true };
   }
 
-  async isIDAlreadyRegistered(control:FormControl) {
-    if (!control.value || control.pristine) return null
+  async isIDAlreadyRegistered(control: FormControl) {
+    if (!control.value || control.pristine) return null;
     const res = await fetch('http://localhost:1000/auth/isCredentialInUse', {
-      method:'post',
-      credentials:"include",
-      body:JSON.stringify({_id:control.value}),
-      headers:{"content-type":"application/json"}
-    })
-    const data = await res.json()
-    if (!data.credentialInUser) return null
-    return {"IDInUse":true}
+      method: 'post',
+      credentials: 'include',
+      body: JSON.stringify({ _id: control.value }),
+      headers: { 'content-type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!data.credentialInUser) return null;
+    return { IDInUse: true };
   }
 
-  async isEmailAlreadyRegistered(control:AbstractControl) {
-    if (!control.value || control.pristine) return null
+  async isEmailAlreadyRegistered(control: AbstractControl) {
+    if (!control.value || control.pristine) return null;
     const res = await fetch('http://localhost:1000/auth/isCredentialInUse', {
-      method:'post',
-      credentials:"include",
-      body:JSON.stringify({email:control.value}),
-      headers:{"content-type":"application/json"}
-    })
-    const data = await res.json()
-    if (!data.credentialInUser) return null
-    return {"EmailInUse":true}
+      method: 'post',
+      credentials: 'include',
+      body: JSON.stringify({ email: control.value }),
+      headers: { 'content-type': 'application/json' },
+    });
+    const data = await res.json();
+    if (!data.credentialInUser) return null;
+    return { EmailInUse: true };
   }
 
-  checkPasswords(group: FormGroup) { 
+  checkPasswords(group: FormGroup) {
     let pass = group.controls['password'].value;
     let confirmPass = group.controls['confirmPassword'].value;
 
-    return pass === confirmPass ? null : { notSame: true } 
-}
+    return pass === confirmPass ? null : { notSame: true };
+  }
 
-confirmPassCheckTest(control:AbstractControl){
-  const pass = control.parent?.get('password')!.value
+  confirmPassCheckTest(control: AbstractControl) {
+    const pass = control.parent?.get('password')!.value;
 
-  return pass === control.value ? null : { notSame: true }
-}
+    return pass === control.value ? null : { notSame: true };
+  }
 
+  async isShippingDateValid(control: AbstractControl) {
+    if (!control.value || control.pristine) return null;
+    const res = await fetch(
+      `http://localhost:1000/lists/order?date=${control.value}`,
+      {
+        credentials: 'include',
+      }
+    );
+    const data = await res.json();
 
+    return data.err || data > 2 ? { maxDeliveries: true } : null;
+  }
+
+  isCreditCardOk(control: AbstractControl) {
+    const num = control.value.trim()
+    return 
+  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
+import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getNotificationMessage(): string {
-    if (!this._auth.user) return 'I should never return'
+    if (!this._auth.user) return 'I should never return';
     if (this._auth.user.carts.length)
       return this._auth.user.carts[0]?.orderID
         ? `Your last purchase was on ${new Date(
@@ -29,9 +30,12 @@ export class DashboardComponent implements OnInit {
     return 'Welcome to your first purchase!';
   }
 
-  getPurchaseButtonMessage(): string{
-    if (this._auth.user) return this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length ? "Start a new purchase":"Continue your purchase"
-    
-    return "I should never return"
+  getPurchaseButtonMessage(): string {
+    if (this._auth.user)
+      return this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length
+        ? 'Start a new purchase'
+        : 'Continue your purchase';
+
+    return 'I should never return';
   }
 }

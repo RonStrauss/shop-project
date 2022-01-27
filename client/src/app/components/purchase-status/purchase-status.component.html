@@ -1,7 +1,13 @@
 <div class="purchase-main">
   <div class="cart">
-    <div class="header">
-      Cart
+    <div class="header">Cart
+    </div>
+    <mat-divider></mat-divider>
+    <div class="search">
+      <mat-form-field>
+        <mat-label>Search Products</mat-label>
+        <input type="text" matInput />
+      </mat-form-field>
     </div>
     <mat-divider></mat-divider>
     <div class="main">
@@ -9,20 +15,59 @@
     </div>
     <mat-divider></mat-divider>
     <div class="footer">
-
+      Total: 0$
     </div>
   </div>
+
+
   <div class="pay">
-    <div class="header">
-      Order
+    <div class="header">Order</div>
+    <mat-divider></mat-divider>
+    <div class="back">
+      <a mat-button routerLink="../cart">Back to shop</a>
     </div>
     <mat-divider></mat-divider>
     <div class="main">
-      main
+      <form [formGroup]="order">
+        <h1>Shipping Details</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <mat-select required formControlName="city">
+            <mat-option *ngFor="let city of cities" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="order.invalid">Please choose a city</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Street</mat-label>
+          <input type="text" matInput formControlName="street">
+          <mat-error *ngIf="order.invalid">You must enter a street for delivery</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date for delivery</mat-label>
+          <input matInput [matDatepicker]="picker" required formControlName="shipping">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="order.invalid">{{getDateErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+        <h1>Payment</h1>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Credit Card Number</mat-label>
+          <input type="text" matInput>
+          <mat-error *ngIf="order.invalid">Please enter a valid credit card</mat-error>
+          <mat-icon matPrefix>credit_card</mat-icon>
+          <mat-hint>Should start with 53XX and include 16 digits total</mat-hint>
+        </mat-form-field>
+
+        <button mat-raised-button [disabled]="order.invalid" type="submit">Pay</button>
+      </form>
     </div>
     <mat-divider></mat-divider>
-    <div class="footer">
-
-    </div>
+    <div class="footer"></div>
   </div>
 </div>
