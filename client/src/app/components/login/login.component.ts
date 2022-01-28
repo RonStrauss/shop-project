@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit,OnDestroy {
     private _shop:ShopService
     ) { }
 
+    // TODO accordion closeAll only if (isOpen)
+
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
       email:['', Validators.required],

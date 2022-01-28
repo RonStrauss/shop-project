@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PurchaseStatusComponent } from './components/purchase-status/purchase-status.component';
+import { ReceiptComponent } from './components/receipt/receipt.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ShopMainComponent } from './components/shop-main/shop-main.component';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
@@ -18,6 +19,7 @@ const routes: Routes = [
     //  canActivate:[IsLoggedInGuard],
   },
   { path: 'purchase', component: PurchaseStatusComponent },
+  {path:'receipt', component:ReceiptComponent},
 
   { path: '**', redirectTo: '' },
 ];

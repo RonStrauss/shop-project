@@ -21,7 +21,7 @@ router.get("/single/:id", async (req, res) => {
 		res.send(populatedCart);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message  });
 	}
 });
 
@@ -44,7 +44,7 @@ router.put("/new", async (req, res) => {
 		res.send(userUpdatedWithCart);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message  });
 	}
 });
 
@@ -107,7 +107,7 @@ router.put("/product/:productID", async (req, res) => {
 		res.send(req.session.user);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message  });
 	}
 });
 
@@ -129,7 +129,7 @@ router.delete("/empty-cart", async (req, res) => {
 		res.send(user);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message  });
 	}
 });
 
@@ -158,10 +158,13 @@ router.post("/pay", async (req, res) => {
 
 		await ShoppingCart.findByIdAndUpdate(populatedCart._id, { orderID: createdOrder._id });
 
-		res.send(createdOrder);
+		const updatedUser = await User.findById(user._id, { __v: 0, password: 0, 'carts':{$slice: -1} })
+		.populate({ path: 'carts',select:{__v:0}, populate: { path: 'orderID', select:{__v:0, total:0, cartID:0} } });
+
+		res.send(updatedUser);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message });
 	}
 });
 
@@ -177,12 +180,13 @@ router.get("/receipt", async (req, res) => {
 		for (const itm of populatedCart.items) {
 			text += itm.quantity + " X " + itm.productID.name + "\n";
 		}
+		text += 'Costing a total of: ' + populatedCart.total
 		res.attachment("receipt.txt");
 		res.type("txt");
 		res.send(text);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message  });
 	}
 });
 

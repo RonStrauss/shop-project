@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CartItem } from 'src/app/interfaces/cart-item';
 
 @Component({
   selector: 'app-purchased-item',
@@ -6,7 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./purchased-item.component.css']
 })
 export class PurchasedItemComponent implements OnInit {
-  @Input() item!:number
+  @Input() item!:CartItem
+  @Input() query:string | undefined
 
   constructor() { }
 

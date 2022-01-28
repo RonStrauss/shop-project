@@ -1,34 +1,40 @@
 <div class="purchase-main">
+
+  <!-- TODO search should return the matching items first then the rest -->
+
   <div class="cart">
-    <div class="header">Cart
-    </div>
+    <div class="header">Cart</div>
     <mat-divider></mat-divider>
     <div class="search">
-      <mat-form-field>
-        <mat-label>Search Products</mat-label>
-        <input type="text" matInput />
-      </mat-form-field>
-    </div>
+      <form [formGroup]="search">
+        <mat-form-field>
+          <mat-label>Search Products</mat-label>
+          <input type="text" matInput formControlName="query" />
+        </mat-form-field>
+      </form>
+      </div>
     <mat-divider></mat-divider>
-    <div class="main">
-      <app-purchased-item *ngFor="let item of testArr" [item]="item"></app-purchased-item>
-    </div>
+    <mat-nav-list class="main">
+      <app-purchased-item *ngFor="let item of _cart.cartItems" [item]="item" [query]="search.get('query')?.value"></app-purchased-item>
+    </mat-nav-list>
     <mat-divider></mat-divider>
     <div class="footer">
-      Total: 0$
+      Total: {{(_auth.user?.carts?.length && _auth.user?.carts![0]?.total) ?? 0}}$
     </div>
   </div>
+
 
 
   <div class="pay">
     <div class="header">Order</div>
     <mat-divider></mat-divider>
     <div class="back">
+      <!-- TODO move "back to shop" button to more reasonable position -->
       <a mat-button routerLink="../cart">Back to shop</a>
     </div>
     <mat-divider></mat-divider>
     <div class="main">
-      <form [formGroup]="order">
+      <form [formGroup]="order" (submit)="_cart.payUp(order)">
         <h1>Shipping Details</h1>
         <mat-form-field appearance="fill">
           <mat-label>City</mat-label>
@@ -48,7 +54,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Choose a date for delivery</mat-label>
-          <input matInput [matDatepicker]="picker" required formControlName="shipping">
+          <input matInput [matDatepicker]="picker" required formControlName="date" [min]="today">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="order.invalid">{{getDateErrorMessage()}}</mat-error>
@@ -56,12 +62,14 @@
 
         <h1>Payment</h1>
 
+        <!-- TODO make custom input for credit cards with spaces / dashes -->
+
         <mat-form-field appearance="fill">
           <mat-label>Credit Card Number</mat-label>
-          <input type="text" matInput>
+          <input type="text" matInput formControlName="lastFourCardDigits" placeholder="53XXXXXXXXXXXXXX">
           <mat-error *ngIf="order.invalid">Please enter a valid credit card</mat-error>
           <mat-icon matPrefix>credit_card</mat-icon>
-          <mat-hint>Should start with 53XX and include 16 digits total</mat-hint>
+          <mat-hint *ngIf="order.get('creditCard')?.invalid">Should start with 53XX and include 16 digits total</mat-hint>
         </mat-form-field>
 
         <button mat-raised-button [disabled]="order.invalid" type="submit">Pay</button>

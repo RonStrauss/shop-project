@@ -1,5 +1,5 @@
 const onlyAdmin = require('../HelpersExpress/onlyAdmin');
-const { Product } = require('../Schemas/AllSchemas');
+const { Product, Order, User } = require('../Schemas/AllSchemas');
 
 const router = require('express').Router();
 
@@ -32,5 +32,43 @@ router.post('/newProduct', async (req, res) => {
 		res.status(500).send({ err: true, msg: 'Server failed...\n' + e.message });
 	}
 });
+
+router.post('/dummyCart', async (req, res) => {
+	try {
+		const { user } = req.session;
+
+		const cart = await ShoppingCart.create({ userID: user._id });
+		await User.findByIdAndUpdate(user._id, { $push: { carts: cart._id } });
+		const userUpdatedWithCart = await User.findById(user._id).populate({
+			path: "carts",
+			select: { __v: 0 },
+			populate: { path: "orderID", select: { __v: 0, total: 0, cartID: 0 } },
+		});
+		req.session.user = userUpdatedWithCart;
+
+		res.send(userUpdatedWithCart);
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+	}
+});
+
+
+router.post('/dummyOrder', async (req, res) => {
+	try {
+		const {user} = req.session
+		const { payload } = req.body;
+
+		payload.shipping.date = new Date(payload.shipping.date)
+
+		await Order.create({ ...payload });
+
+		res.sendStatus(201);
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({ err: true, msg: 'Server failed...\n' + e.message });
+	}	
+});	
+
 
 module.exports = router;

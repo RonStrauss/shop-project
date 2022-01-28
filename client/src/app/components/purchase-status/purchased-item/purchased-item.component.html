@@ -1,1 +1,5 @@
-<p>{{item}}</p>
+<mat-list-item>
+    <img [src]="item.productID.imageURL" alt="Product Image">
+    <div mat-line [innerHTML]="item.productID.name | highlight:query"></div>
+    <div mat-line>{{(item.quantity| totalItem:item.productID.priceInteger:item.productID.priceDecimal)}}</div>
+</mat-list-item>

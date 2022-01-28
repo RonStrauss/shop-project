@@ -8,6 +8,8 @@ export class customValidators {
   emailRegex =
     /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
+    creditCardRegex = /^(53)(\d{14})$/
+
   constructor() {}
 
   isIsraeliIdValid(control: FormControl) {
@@ -81,11 +83,6 @@ export class customValidators {
     );
     const data = await res.json();
 
-    return data.err || data > 2 ? { maxDeliveries: true } : null;
-  }
-
-  isCreditCardOk(control: AbstractControl) {
-    const num = control.value.trim()
-    return 
+    return data.err || data.orders > 2 ? { maxDeliveries: true } : null;
   }
 }

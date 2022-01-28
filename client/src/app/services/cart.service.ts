@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CartItem } from '../interfaces/cart-item';
 import { Product } from '../interfaces/product';
 import { AuthService } from './auth.service';
@@ -10,9 +12,11 @@ import { ShopService } from './shop.service';
 export class CartService {
   cartItems: CartItem[] = [];
 
+
+
   // TODO connect cart to product update
 
-  constructor(public _auth: AuthService, public _shop: ShopService) {}
+  constructor(public _auth: AuthService, public _shop: ShopService, public _router:Router) {}
 
   async updateCart(productID: string, quantity: number) {
     const res = await fetch(
@@ -56,4 +60,23 @@ export class CartService {
       this._auth.user = data
     }
   }
+
+  async payUp(order:FormGroup) {
+    const res = await fetch ('http://localhost:1000/cart/pay', {
+      credentials:"include",
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({...order.value,lastFourCardDigits:order.value.lastFourCardDigits.slice(12)}),
+      method:'post'
+    })
+    const data = await res.json()
+    if (!data.err){
+      this.cartItems = []
+      this._auth.user = data
+      this._router.navigateByUrl('receipt')
+    }else{
+      alert(data.msg)
+
+    }
+  }
+
 }

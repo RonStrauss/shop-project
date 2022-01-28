@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Observable, Subscriber, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { customValidators } from 'src/app/services/custom-validators.service';
 
 @Component({
@@ -13,28 +15,32 @@ import { customValidators } from 'src/app/services/custom-validators.service';
   styleUrls: ['./purchase-status.component.css'],
 })
 export class PurchaseStatusComponent implements OnInit {
+  // TODO change cities to GET from localhost/lists
   cities = ['Jerusalem', 'Tel-Aviv', 'Haifa'];
 
-  order!: FormGroup;
+  today = new Date()
 
-  constructor(public _fb: FormBuilder, private _validators:customValidators) {}
+  order!: FormGroup;
+  search!: FormGroup;
+
+  valChanges!:Subscription
+
+  constructor(public _fb: FormBuilder, private _validators:customValidators, public _cart:CartService, public _auth:AuthService) {}
 
   ngOnInit(): void {
+    this.search = this._fb.group({query:[]});
+
     this.order = this._fb.group({
       city: ['', [Validators.required]],
       street: ['', [Validators.required]],
-      shipping: [, [Validators.required], [this._validators.isShippingDateValid]],
-      creditCard:['',[Validators.required,]]
+      date: [, [Validators.required], [this._validators.isShippingDateValid]],
+      lastFourCardDigits:['',[Validators.required,Validators.pattern(this._validators.creditCardRegex)]]
     });
   }
 
   ngOnDestroy(): void {}
 
-  testArr = [
-    1, 2, 3, 4, 5, 4, 5, 6, 5, 6, 5, 4, 3, 5, 6, 7, 5, 3, 4, 6, 5, 6, 7, 8, 9,
-  ];
-
   getDateErrorMessage(){
-    return this.order.get('shipping')?.hasError('required') ? 'Please choose a shipping date' : 'Please choose a date later than yesterday or a different one'
+    return this.order.get('shipping')?.hasError('required') ? 'Please choose a shipping date' : 'That date is unavailable, please choose a different one instead'
   }
 }
