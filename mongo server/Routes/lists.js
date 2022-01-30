@@ -60,6 +60,8 @@ router.get("/order", async (req, res) => {
 	try {
 		const date = new Date(new Date(req.query?.date)?.toISOString().split("T")[0]);
 
+		console.log(date);
+
 		const today = new Date(new Date().toISOString().split("T")[0]);
 
 		if (isNaN(date.valueOf()) || date.valueOf() < today.valueOf()) return res.status(400).send({ err: true, msg: "Please provide a valid date" });

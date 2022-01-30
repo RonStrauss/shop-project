@@ -63,3 +63,17 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+.main > form {
+  padding: 0.8rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title button {
+  margin-bottom: 0.6rem;
+}

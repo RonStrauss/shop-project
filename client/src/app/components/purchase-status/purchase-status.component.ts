@@ -4,10 +4,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { customValidators } from 'src/app/services/custom-validators.service';
+import { ListsService } from 'src/app/services/lists.service';
 
 @Component({
   selector: 'app-purchase-status',
@@ -15,8 +16,6 @@ import { customValidators } from 'src/app/services/custom-validators.service';
   styleUrls: ['./purchase-status.component.css'],
 })
 export class PurchaseStatusComponent implements OnInit {
-  // TODO change cities to GET from localhost/lists
-  cities = ['Jerusalem', 'Tel-Aviv', 'Haifa'];
 
   today = new Date()
 
@@ -25,7 +24,7 @@ export class PurchaseStatusComponent implements OnInit {
 
   valChanges!:Subscription
 
-  constructor(public _fb: FormBuilder, private _validators:customValidators, public _cart:CartService, public _auth:AuthService) {}
+  constructor(public _fb: FormBuilder, private _validators:customValidators, public _cart:CartService, public _auth:AuthService, public _lists:ListsService) {}
 
   ngOnInit(): void {
     this.search = this._fb.group({query:[]});
@@ -41,6 +40,10 @@ export class PurchaseStatusComponent implements OnInit {
   ngOnDestroy(): void {}
 
   getDateErrorMessage(){
-    return this.order.get('shipping')?.hasError('required') ? 'Please choose a shipping date' : 'That date is unavailable, please choose a different one instead'
+    return this.order.get('date')?.hasError('required') ? 'Please choose a shipping date' : 'That date is unavailable, please choose a different one instead'
+  }
+
+  fillAddress(){
+    this.order.setValue({...this.order.value, city:this._auth.user?.address.city,street:this._auth.user?.address.street})
   }
 }

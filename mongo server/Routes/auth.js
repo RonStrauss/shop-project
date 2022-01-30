@@ -16,7 +16,7 @@ router.post('/login', async (req, res) => {
 
 		if (!user.length) return res.status(400).send({ err: true, msg: 'Wrong Username Or Password' });
 
-		req.session.user = user[0];
+		req.session.user = user[0];;
 
 		return res.send(user[0]);
 	} catch (e) {

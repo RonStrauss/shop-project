@@ -19,11 +19,12 @@ import { PurchaseStatusComponent } from './components/purchase-status/purchase-s
 import { PurchasedItemComponent } from './components/purchase-status/purchased-item/purchased-item.component';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { ReceiptComponent } from './components/receipt/receipt.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
-  providers: [],
+  providers: [{provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

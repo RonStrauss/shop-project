@@ -29,6 +29,8 @@ router.put("/new", async (req, res) => {
 	try {
 		const { user } = req.session;
 
+		console.log(user);
+
 		if (user.carts[0] && !user.carts[0].orderID)
 			return res.status(400).send({ err: true, msg: "You can't open a new cart until you've finished your previous purchase..." });
 
@@ -133,14 +135,31 @@ router.delete("/empty-cart", async (req, res) => {
 	}
 });
 
-// TODO add credit card validation | connect date validation
+// TODO add credit card validation
 
 router.post("/pay", async (req, res) => {
 	try {
 		const { user } = req.session;
-		const { lastFourCardDigits, city, street, date } = req.body;
+		const { lastFourCardDigits, city, street, date:unconvertedDate } = req.body;
 
-		if (!lastFourCardDigits || !city || !street || !date) return res.status(400).send({ err: true, msg: "Missing parameters" });
+		if (!lastFourCardDigits || !city || !street || !unconvertedDate) return res.status(400).send({ err: true, msg: "Missing parameters" });
+
+		const tempDate = new Date(unconvertedDate)
+
+		if (isNaN(tempDate.valueOf())) return res.status(400).send({ err: true, msg: "Please provide a valid date" });
+
+		//TODO date check only working for gmt+2, adjust for international
+
+		tempDate.setTime(tempDate.getTime() + (1000 * 60 * 60 * 2))
+
+		const date = new Date(new Date(tempDate).toISOString().split("T")[0]);
+
+		const today = new Date(new Date().toISOString().split("T")[0]);
+
+		console.log("date:"+date);
+		console.log("today:"+today);
+
+		if (date.valueOf() < today.valueOf()) return res.status(400).send({ err: true, msg: "Please provide a valid date" });
 
 		const populatedCart = await ShoppingCart.findById(user.carts[0]._id, { __v: 0 }).populate({ path: "items", populate: { path: "productID" } });
 
@@ -152,7 +171,7 @@ router.post("/pay", async (req, res) => {
 			userID: user._id,
 			cartID: populatedCart._id,
 			total: populatedCart.total,
-			shipping: { city, street, date },
+			shipping: { city, street, date},
 			lastFourCardDigits,
 		});
 
@@ -160,6 +179,8 @@ router.post("/pay", async (req, res) => {
 
 		const updatedUser = await User.findById(user._id, { __v: 0, password: 0, 'carts':{$slice: -1} })
 		.populate({ path: 'carts',select:{__v:0}, populate: { path: 'orderID', select:{__v:0, total:0, cartID:0} } });
+
+		req.session.user = updatedUser;
 
 		res.send(updatedUser);
 	} catch (e) {

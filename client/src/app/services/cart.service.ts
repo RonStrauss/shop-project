@@ -72,6 +72,7 @@ export class CartService {
     if (!data.err){
       this.cartItems = []
       this._auth.user = data
+      console.log(this._auth.user);
       this._router.navigateByUrl('receipt')
     }else{
       alert(data.msg)

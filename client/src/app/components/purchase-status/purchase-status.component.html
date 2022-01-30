@@ -12,10 +12,11 @@
           <input type="text" matInput formControlName="query" />
         </mat-form-field>
       </form>
-      </div>
+    </div>
     <mat-divider></mat-divider>
     <mat-nav-list class="main">
-      <app-purchased-item *ngFor="let item of _cart.cartItems" [item]="item" [query]="search.get('query')?.value"></app-purchased-item>
+      <app-purchased-item *ngFor="let item of _cart.cartItems" [item]="item" [query]="search.get('query')?.value">
+      </app-purchased-item>
     </mat-nav-list>
     <mat-divider></mat-divider>
     <div class="footer">
@@ -29,8 +30,7 @@
     <div class="header">Order</div>
     <mat-divider></mat-divider>
     <div class="back">
-      <!-- TODO move "back to shop" button to more reasonable position -->
-      <a mat-button routerLink="../cart">Back to shop</a>
+      <button mat-raised-button (click)="fillAddress()">Fill from saved shipping details</button>
     </div>
     <mat-divider></mat-divider>
     <div class="main">
@@ -39,7 +39,7 @@
         <mat-form-field appearance="fill">
           <mat-label>City</mat-label>
           <mat-select required formControlName="city">
-            <mat-option *ngFor="let city of cities" [value]="city">
+            <mat-option *ngFor="let city of _lists.cities" [value]="city">
               {{city}}
             </mat-option>
           </mat-select>
@@ -69,7 +69,8 @@
           <input type="text" matInput formControlName="lastFourCardDigits" placeholder="53XXXXXXXXXXXXXX">
           <mat-error *ngIf="order.invalid">Please enter a valid credit card</mat-error>
           <mat-icon matPrefix>credit_card</mat-icon>
-          <mat-hint *ngIf="order.get('creditCard')?.invalid">Should start with 53XX and include 16 digits total</mat-hint>
+          <mat-hint *ngIf="order.get('creditCard')?.invalid">Should start with 53XX and include 16 digits total
+          </mat-hint>
         </mat-form-field>
 
         <button mat-raised-button [disabled]="order.invalid" type="submit">Pay</button>

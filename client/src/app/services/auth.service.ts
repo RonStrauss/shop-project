@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Login } from '../interfaces/login';
 import { Register } from '../interfaces/register';
 import { User } from '../interfaces/user';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root',

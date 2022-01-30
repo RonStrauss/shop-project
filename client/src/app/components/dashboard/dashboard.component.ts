@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DashboardServicesService } from 'src/app/services/dashboard-services.service';
-import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-dashboard',
