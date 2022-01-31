@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>{{getTitleMessage()}}</h1>
+<mat-divider></mat-divider>
+<form mat-dialog-content [formGroup]="productForm">
+  <mat-form-field>
+    <mat-label>Product Name</mat-label>
+    <input type="text" matInput formControlName="name">
+    <mat-error *ngIf="productForm.invalid">Required value</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="categoryID">
+      <mat-option *ngFor="let cat of _shop.categories" [value]="cat">{{cat}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="productForm.invalid">Required value</mat-error>
+  </mat-form-field>
+  <div class="price">
+    <mat-form-field class="number">
+      <mat-label>Integer</mat-label>
+      <input type="number" matInput min="0" max="99999" step="1" formControlName='priceInteger'>
+      <mat-error *ngIf="productForm.invalid">Invalid value</mat-error>
+    </mat-form-field>
+    <span>.</span>
+    <mat-form-field class="number">
+      <mat-label>Decimal</mat-label>
+      <input type="number" matInput min="0" max="99" step="1" formControlName='priceDecimal'>
+      <mat-error *ngIf="productForm.invalid">Invalid value</mat-error>
+    </mat-form-field>
+    <span class="dollar">
+      $
+    </span>
+  </div>
+  <mat-form-field>
+    <mat-label>Image URL</mat-label>
+    <input type="url" matInput formControlName='imageURL'>
+    <mat-error *ngIf="productForm.invalid">Required value</mat-error>
+  </mat-form-field>
+  <mat-checkbox formControlName='isInWeight'>Sold in KGs</mat-checkbox>
+</form>
+<div align="end">
+  <button mat-stroked-button color="primary" [disabled]="productForm.invalid">Add</button>
+  <button mat-stroked-button color="warn" (click)="cancelDialog()">Cancel</button>
+</div>

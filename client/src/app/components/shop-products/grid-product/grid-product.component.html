@@ -2,7 +2,7 @@
   <div class="left">
     <div class="name">{{product.name}}</div>
     <div class="mat-body-1"><em>{{product.priceInteger + '.' + product.priceDecimal}}</em></div>
-    <form [formGroup]="quantity" (submit)="changeProductQuantity()">
+    <form [formGroup]="quantity" (submit)="changeProductQuantity()" *ngIf="_auth.user?.role === 'user'">
         <mat-form-field>
             <input matInput type="number" formControlName="number" readonly class="quantity">
             <button type="button" matSuffix mat-icon-button [disabled]="quantity.get('number')?.value == 50" (click)="increment()"><mat-icon>add</mat-icon></button>
@@ -12,6 +12,10 @@
         </mat-form-field>
         <button mat-stroked-button color="primary" *ngIf="valueChanged" type="submit" class="update-quantity-button">Update Cart</button>
     </form>
+    <div class="button-group"  *ngIf="_auth.user?.role === 'admin'">
+      <button mat-stroked-button matTooltip="Edit product" class="edit" color="primary" (click)="openDialog()"><mat-icon>edit</mat-icon></button><button matTooltip="Delete product" color="warn" class="delete" mat-stroked-button><mat-icon>delete</mat-icon></button>
+      <button class="add" matTooltip="Add a new product" mat-fab color="primary" (click)="openDialog()"><mat-icon>add</mat-icon></button>
+    </div>
   </div>
   <div class="right">
     <img [src]="product.imageURL" [alt]="product.name">

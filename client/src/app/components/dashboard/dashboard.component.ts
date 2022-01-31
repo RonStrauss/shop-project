@@ -18,23 +18,27 @@ export class DashboardComponent implements OnInit {
   }
 
   getNotificationMessage(): string {
-    if (!this._auth.user) return 'I should never return';
-    if (this._auth.user.carts.length)
-      return this._auth.user.carts[0]?.orderID
-        ? `Your last purchase was on ${new Date(
-            this._auth.user.carts[0].orderID.dateMade
-          )}`
-        : 'Please finish your opened order before opening a new cart 😃';
+    if (this._auth.user?.role === 'user'){
 
-    return 'Welcome to your first purchase!';
+      if (this._auth.user.carts.length)
+      return this._auth.user.carts[0]?.orderID
+      ? `Your last purchase was on ${new Date(
+        this._auth.user.carts[0].orderID.dateMade
+        )}`
+        : 'Please finish your opened order before opening a new cart 😃';
+        
+        return 'Welcome to your first purchase!';
+      } else {
+        return 'Welcome dear admin overlord!'
+      }
   }
 
   getPurchaseButtonMessage(): string {
-    if (this._auth.user)
+    if (this._auth.user?.role === 'user')
       return this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length
         ? 'Start a new purchase'
         : 'Continue your purchase';
 
-    return 'I should never return';
+    return 'Continue to admin panel';
   }
 }

@@ -1,0 +1,18 @@
+.number {
+  width: 3rem;
+}
+
+span {
+  margin: 0 0.4rem;
+  font-size: xx-large;
+  vertical-align: text-top;
+}
+
+.dollar {
+    font-size: larger;
+}
+
+.title {
+  margin: 1rem 0;
+  font-size: x-large;
+}

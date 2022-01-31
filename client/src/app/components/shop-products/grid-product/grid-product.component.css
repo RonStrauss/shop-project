@@ -1,44 +1,63 @@
 .wrapper {
-    display: flex;
-    
-    align-items: center;
+  display: flex;
+
+  align-items: center;
 }
 
-.left{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.left mat-form-field{
-    width: 40%;
+.left mat-form-field {
+  width: 40%;
 }
 
 img {
-    max-width: 7rem;
+  max-width: 7rem;
+  margin-left: 1rem;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   display: none;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .name {
-    font-size: large;
-    padding-bottom: 0.5rem;
+  font-size: large;
+  padding-bottom: 0.5rem;
 }
 
-.quantity{
-    text-align: center;
+.quantity {
+  text-align: center;
 }
 
-.update-quantity-button{
-    position: absolute;
-    bottom: 0;
+.update-quantity-button {
+  position: absolute;
+  bottom: 0;
+}
+
+.edit, .delete{
+    margin-top: 1rem;
+}
+
+.edit {
+border-radius: 5px 0 0 5px;
+}
+
+.delete {
+  border-radius: 0 5px 5px 0;
+}
+
+.add {
+  position: fixed;
+  bottom:3rem;
+  right:3rem;
 }

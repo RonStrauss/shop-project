@@ -9,7 +9,7 @@ export class DashboardServicesService {
   totalProducts = 0;
   totalOrders = 0;
 
-  constructor(private _auth: AuthService, private _router:Router) {}
+  constructor(private _auth: AuthService, private _router: Router) {}
 
   async getProductsAndOrdersNumber() {
     const res = await fetch(
@@ -21,25 +21,26 @@ export class DashboardServicesService {
   }
 
   async openNewCartAndNavigate() {
-    if (this._auth.user){
-
+    if (this._auth.user?.role === 'admin') {
+      this._router.navigateByUrl('/admin');
+    } else {
       if (
-        (this._auth.user.carts[0]?.orderID || !this._auth.user.carts.length)
-    ) {
-      const res = await fetch('http://localhost:1000/cart/new', {
-        method: 'put',
-        credentials: 'include',
-      });
-      const data = await res.json();
-      if (!data.err) {
-        this._auth.user = data;
+        this._auth.user?.carts?.[0]?.orderID ||
+        !this._auth.user?.carts.length
+      ) {
+        const res = await fetch('http://localhost:1000/cart/new', {
+          method: 'put',
+          credentials: 'include',
+        });
+        const data = await res.json();
+        if (!data.err) {
+          this._auth.user = data;
+        } else {
+          alert(data.msg);
+        }
       } else {
-        alert(data.msg)
+        this._router.navigateByUrl('/cart');
       }
     }
-    this._router.navigateByUrl('/cart')
-  } else {
-    alert('Whoops! Please refresh page and re-login 🤭')
-  }
   }
 }
