@@ -1,5 +1,5 @@
 const onlyLoggedIn = require("../HelpersExpress/onlyLoggedIn");
-const { Product, Order, City } = require("../Schemas/AllSchemas");
+const { Product, Order, City, Category } = require("../Schemas/AllSchemas");
 
 const router = require("express").Router();
 
@@ -37,6 +37,19 @@ router.get("/products-categories", async (req, res) => {
 		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
 	}
 });
+
+router.get("/categories", async (req, res) => {
+	try {
+		const categories = await Category.find({}, { __v: 0 })
+
+		res.send(categories.map(cat=>cat._id));
+	} catch (e) {
+		console.log(e);
+		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+	}
+});
+
+
 
 router.get("/product-search", async (req, res) => {
 	try {

@@ -20,11 +20,10 @@ import { PurchasedItemComponent } from './components/purchase-status/purchased-i
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { ReceiptComponent } from './components/receipt/receipt.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { AdminComponent } from './components/admin/admin.component';
 import { AdminDialogComponent } from './components/admin-dialog/admin-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent, AdminComponent, AdminDialogComponent],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent, AdminDialogComponent],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
   providers: [{provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
   bootstrap: [AppComponent],

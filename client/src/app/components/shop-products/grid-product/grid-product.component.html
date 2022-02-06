@@ -13,8 +13,8 @@
         <button mat-stroked-button color="primary" *ngIf="valueChanged" type="submit" class="update-quantity-button">Update Cart</button>
     </form>
     <div class="button-group"  *ngIf="_auth.user?.role === 'admin'">
-      <button mat-stroked-button matTooltip="Edit product" class="edit" color="primary" (click)="openDialog()"><mat-icon>edit</mat-icon></button><button matTooltip="Delete product" color="warn" class="delete" mat-stroked-button><mat-icon>delete</mat-icon></button>
-      <button class="add" matTooltip="Add a new product" mat-fab color="primary" (click)="openDialog()"><mat-icon>add</mat-icon></button>
+      <button mat-stroked-button matTooltip="Edit product" class="edit" color="primary" (click)="editDialog()"><mat-icon>edit</mat-icon></button><button matTooltip="Delete product" color="warn" class="delete" mat-stroked-button (click)="_admin.deleteProduct(product._id)"><mat-icon>delete</mat-icon></button>
+      <button class="add" matTooltip="Add a new product" mat-fab color="primary" (click)="addDialog()"><mat-icon>add</mat-icon></button>
     </div>
   </div>
   <div class="right">

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './components/admin/admin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PurchaseStatusComponent } from './components/purchase-status/purchase-status.component';
 import { ReceiptComponent } from './components/receipt/receipt.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ShopMainComponent } from './components/shop-main/shop-main.component';
+import { ShopProductsComponent } from './components/shop-products/shop-products.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 
@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'receipt', component: ReceiptComponent },
   {
     path: 'admin',
-    component: AdminComponent,
+    component: ShopProductsComponent,
     // canActivate:[IsAdminGuard]
   },
 

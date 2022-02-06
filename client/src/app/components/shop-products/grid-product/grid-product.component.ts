@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { Product } from '../../../interfaces/product';
@@ -26,6 +27,7 @@ export class GridProductComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     public _auth: AuthService,
     public _cart: CartService,
+    public _admin:AdminService,
     public dialog: MatDialog
   ) {}
 
@@ -94,7 +96,12 @@ export class GridProductComponent implements OnInit, OnDestroy {
     this.valueChanged = false;
   }
 
-  openDialog(): void {
+  editDialog(): void {
+    const dialogRef = this.dialog.open(AdminDialogComponent, {
+      data: this.product,
+    });
+  }
+  addDialog(): void {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: {},
     });

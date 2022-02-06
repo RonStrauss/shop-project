@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { AuthService } from 'src/app/services/auth.service';
 import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ShopService } from 'src/app/services/shop.service';
   styleUrls: ['./shop-products.component.css'],
 })
 export class ShopProductsComponent implements OnInit {
-  constructor(public _shop: ShopService) {}
+  constructor(public _shop: ShopService, public _auth:AuthService) {}
 
   @Input()hide!:boolean
 

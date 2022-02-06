@@ -38,9 +38,8 @@ export class DashboardServicesService {
         } else {
           alert(data.msg);
         }
-      } else {
-        this._router.navigateByUrl('/cart');
       }
+      this._router.navigateByUrl('/cart');
     }
   }
 }

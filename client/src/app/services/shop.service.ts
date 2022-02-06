@@ -48,4 +48,14 @@ export class ShopService {
       }
     }
   }
+
+  setProducts(data:Product[]){
+    this.products = data;
+    this.categories = Array.from(
+      new Set(data.map((product: Product) => product.categoryID._id))
+    );
+    this.currentViewedProducts = this.products.filter(
+      (prd) => prd.categoryID._id === this.selectedCategory
+    );
+  }
 }

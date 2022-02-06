@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{getTitleMessage()}}</h1>
 <mat-divider></mat-divider>
-<form mat-dialog-content [formGroup]="productForm">
+<form mat-dialog-content [formGroup]="productForm" (submit)="handleSubmit()">
   <mat-form-field>
     <mat-label>Product Name</mat-label>
     <input type="text" matInput formControlName="name">
@@ -9,7 +9,7 @@
   <mat-form-field>
     <mat-label>Category</mat-label>
     <mat-select formControlName="categoryID">
-      <mat-option *ngFor="let cat of _shop.categories" [value]="cat">{{cat}}</mat-option>
+      <mat-option *ngFor="let cat of _admin.availableCategories" [value]="cat">{{cat}}</mat-option>
     </mat-select>
     <mat-error *ngIf="productForm.invalid">Required value</mat-error>
   </mat-form-field>
@@ -35,8 +35,8 @@
     <mat-error *ngIf="productForm.invalid">Required value</mat-error>
   </mat-form-field>
   <mat-checkbox formControlName='isInWeight'>Sold in KGs</mat-checkbox>
+  <div align="end">
+    <button mat-stroked-button type="submit" color="primary" [disabled]="productForm.invalid">{{getButtonMessage()}}</button>
+    <button mat-stroked-button color="warn" type="button" (click)="cancelDialog()">Cancel</button>
+  </div>
 </form>
-<div align="end">
-  <button mat-stroked-button color="primary" [disabled]="productForm.invalid">Add</button>
-  <button mat-stroked-button color="warn" (click)="cancelDialog()">Cancel</button>
-</div>

@@ -85,4 +85,16 @@ export class customValidators {
 
     return data.err || data.orders > 2 ? { maxDeliveries: true } : null;
   }
+
+  isPriceValidDecimal(control:AbstractControl){
+    const integer = control.parent?.get('priceInteger')?.value
+
+    return integer + control.value > 0 ? null : {isFree:true}
+  }
+
+  isPriceValidInteger(control:AbstractControl){
+    const decimal = control.parent?.get('priceDecimal')?.value
+
+    return decimal + control.value > 0 ? null : {isFree:true}
+  }
 }
