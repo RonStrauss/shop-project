@@ -12,6 +12,8 @@ import { ShopService } from './shop.service';
 export class CartService {
   cartItems: CartItem[] = [];
 
+  searchedCartItems: CartItem[] = [];
+
 
 
   // TODO connect cart to product update

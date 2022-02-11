@@ -1,5 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
+
 const { User, ShoppingCart, Category, Product, Order, City } = require("./Schemas/AllSchemas");
 
 const app = express();
@@ -24,7 +27,7 @@ app.use(
 (async () => {
 	try {
 		await mongoose.connect("mongodb://localhost/ronShopDB");
-		await initialDB();
+		// await initialDB();
 	} catch (e) {}
 })();
 
@@ -328,3 +331,6 @@ app.listen(1000, () => {
 	console.log(`Running on :1000!
 http://localhost:1000`);
 });
+
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile, {explorer: true}))
+

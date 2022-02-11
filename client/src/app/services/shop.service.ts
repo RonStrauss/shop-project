@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Product } from '../interfaces/product';
 
 @Injectable({
@@ -9,8 +9,6 @@ export class ShopService {
   categories: string[] = ['Products'];
 
   currentViewedProducts: Product[] = [];
-
-  categoryChanged: EventEmitter<string> = new EventEmitter();
 
   selectedCategory: string = 'Products';
 
@@ -27,6 +25,7 @@ export class ShopService {
       this.currentViewedProducts = this.products.filter(
         (prd) => prd.categoryID._id === this.categories[0]
       );
+      this.selectedCategory = this.categories[0]
     }
   }
 

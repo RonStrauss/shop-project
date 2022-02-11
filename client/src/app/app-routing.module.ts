@@ -9,7 +9,7 @@ import { ShopProductsComponent } from './components/shop-products/shop-products.
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 
-//TODO activate loggedInGuard and adminGuard
+//TODO beforeSubmit - activate loggedInGuard and adminGuard
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, pathMatch: 'full' },

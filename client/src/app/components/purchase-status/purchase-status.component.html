@@ -1,7 +1,5 @@
 <div class="purchase-main">
 
-  <!-- TODO search should return the matching items first then the rest -->
-
   <div class="cart">
     <div class="header">Cart</div>
     <mat-divider></mat-divider>
@@ -10,12 +8,13 @@
         <mat-form-field>
           <mat-label>Search Products</mat-label>
           <input type="text" matInput formControlName="query" />
+          <button mat-icon-button matSuffix type="reset" [ngStyle]="{visibility:search.get('query')?.value ? 'visible' : 'hidden'}"><mat-icon>clear</mat-icon></button>
         </mat-form-field>
       </form>
     </div>
     <mat-divider></mat-divider>
     <mat-nav-list class="main">
-      <app-purchased-item *ngFor="let item of _cart.cartItems" [item]="item" [query]="search.get('query')?.value">
+      <app-purchased-item *ngFor="let item of _cart.searchedCartItems" [item]="item" [query]="search.get('query')?.value">
       </app-purchased-item>
     </mat-nav-list>
     <mat-divider></mat-divider>

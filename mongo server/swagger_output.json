@@ -1,0 +1,722 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "RonShop Rest API",
+		"contact": {
+			"email": "ron.strauss.work@gmail.com"
+		},
+		"description": "All endpoints available for requests"
+	},
+	"host": "localhost:1000",
+	"basePath": "/",
+	"tags": [
+		{ "name": "auth", "description": "Login / Register / Logout" },
+		{ "name": "cart", "description": "Cart and orders operations" },
+		{ "name": "lists", "description": "Arrays of information" },
+		{ "name": "admin", "description": "Admin operations" }
+	],
+	"schemes": ["http"],
+	"paths": {
+		"/auth/login": {
+			"post": {
+				"tags": ["auth"],
+				"summary": "Logs the user in",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"email": { "example": "Incredible.arachnid.person@gmail.com" },
+								"password": { "example": "password123" }
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": { "description": "Accepted credentials", "schema": { "$ref": "#/definitions/User" } },
+					"400": { "description": "Wrong Email Or Password" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/auth/isCredentialInUse": {
+			"post": {
+				"tags": ["auth"],
+				"description": "Check whether the email or ID is already registered in the server",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"_id": {
+									"example": 123456782
+								},
+								"email": {
+									"example": "already.taken@gmail.com"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Valid request, either in use (1) or OK to use (1)",
+						"schema": { "type": "object", "properties": { "credentialInUser": { "type": "integer", "enum": [0, 1] } } }
+					},
+					"400": {
+						"description": "Missing both email and _id"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/auth/register": {
+			"post": {
+				"tags": ["auth"],
+				"summary": "Register a new user account",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"email": {
+									"example": "email@email.com"
+								},
+								"_id": {
+									"example": 123456782
+								},
+								"password": {
+									"example": "password123"
+								},
+								"first": {
+									"example": "Peter"
+								},
+								"last": {
+									"example": "Parker"
+								},
+								"city": {
+									"example": "Queens, New York"
+								},
+								"street": {
+									"example": "Secret st."
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"400": {
+						"description": "Bad Request. Missing one of more of the values or trying to bypass distinct values"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+
+		"/auth/logout": {
+			"delete": {
+				"tags": ["auth"],
+				"description": "Log out of currently signed in account. Gets account from cookies.",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Logged out successfully",
+						"schema": { "type": "object", "properties": { "msg": { "type": "string", "example": "Logged out successfully" } } }
+					},
+					"401": {
+						"description": "Unauthorized. You're not logged in."
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/lists/orders-and-products-count": {
+			"get": {
+				"tags": ["lists"],
+				"description": "Responds with integer of total number of both completed orders, and items offered for sale.",
+				"responses": {
+					"200": {
+						"schema": { "type": "object", "properties": { "orders": { "type": "integer", "example": 4 }, "products": { "type": "integer", "example": 28 } } }
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/lists/cities": {
+			"get": {
+				"tags": ["lists"],
+				"description": "Returns a string[] of cities available in Israel.",
+				"responses": {
+					"200": {
+						"schema": { "type": "array", "items": { "type": "string", "example": "Jerusalem" } }
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/lists/products-categories": {
+			"get": {
+				"tags": ["lists"],
+				"description": "Returns Product[] of all available products in database",
+				"responses": {
+					"200": {
+						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/lists/categories": {
+			"get": {
+				"tags": ["lists"],
+				"description": "Returns a string[] of categories available in the database.",
+				"responses": {
+					"200": {
+						"schema": { "type": "array", "items": { "type": "string", "example": "Dairy & Eggs" } }
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/lists/product-search": {
+			"get": {
+				"tags": ["lists"],
+				"description": "Returns an array of all available products in database that match the query (case insensitive)",
+				"parameters": [
+					{
+						"name": "query",
+						"in": "query",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Searching for milk ",
+						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/lists/order": {
+			"get": {
+				"tags": ["lists"],
+				"description": "Checks how many orders were placed for queried date. Accepts both *date* or *date-time*",
+				"parameters": [
+					{
+						"name": "date",
+						"in": "query",
+						"type": "date-time"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Valid request, returns integer of orders",
+						"schema": { "type": "object", "properties": { "orders": { "type": "integer", "enum": [0, 1, 2, 3] } } }
+					},
+					"400": {
+						"description": "Invalid date received"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/cart/{id}": {
+			"get": {
+				"tags": ["cart"],
+				"summary": "Tries to find a cart based on the id provided",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"schema": { "$ref": "#/definitions/Cart" }
+					},
+					"401": {
+						"description": "Not logged in or not a user"
+					},
+					"403": {
+						"description": "Logged user not allowed to receive other user's cart"
+					},
+					"404": {
+						"description": "Cart not found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/cart/new": {
+			"put": {
+				"tags": ["cart"],
+				"responses": {
+					"200": {
+						"schema": { "$ref": "#/definitions/User WithoutItems" }
+					},
+					"400": {
+						"description": "Can't open a new cart since user already has an open one"
+					},
+					"401": {
+						"description": "Not logged in or not a user"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/cart/product/{productID}": {
+			"put": {
+				"tags": ["cart"],
+				"summary": "Change cart item",
+				"description": "Checks whether the item is already in the cart. If quantity is 0, proceeds to remove it. Otherwise, adds or updates accordingly.",
+				"parameters": [
+					{
+						"name": "productID",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "quantity",
+						"in": "query",
+						"type": "integer",
+						"maximum": 50,
+						"minimum": 0,
+						"format": "int8",
+						"description": "Accepts if item is already in cart, otherwise can't be 0"
+					}
+				],
+				"responses": {
+					"200": {
+						"schema": { "$ref": "#/definitions/User WithoutOrderID" }
+					},
+					"400": {
+						"description": "Illegal quantity, or couldn't find item/cart"
+					},
+					"401": {
+						"description": "Not logged in or not a user"
+					},
+					"403": {
+						"description": "Can't change other user's cart"
+					},
+					"404": {
+						"description": "Cart doesn't exist"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/cart/empty-cart": {
+			"delete": {
+				"tags": ["cart"],
+				"summary": "Empty the cart",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"schema": { "$ref": "#/definitions/User WithoutItems" }
+					},
+					"401": {
+						"description": "Not logged in or not a user"
+					},
+					"403": {
+						"description": "Can't change other user's cart"
+					},
+					"404": {
+						"description": "Cart doesn't exist"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/cart/pay": {
+			"post": {
+				"tags": ["cart"],
+				"summary": "Complete an open order",
+				"description": "",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"lastFourCardDigits": {
+									"example": "1234"
+								},
+								"city": {
+									"example": "Queens, New York City, New York"
+								},
+								"street": {
+									"example": "It's a secret 😶"
+								},
+								"date": {
+									"type": "string",
+									"format": "date-time"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					},
+					"400": {
+						"description": "Missing or invalid parameters"
+					},
+					"401": {
+						"description": "Not logged in or not a user"
+					},
+					"403": {
+						"description": "Can't change other user's cart"
+					},
+					"404": {
+						"description": "Cart doesn't exist"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/cart/receipt": {
+			"get": {
+				"tags": ["cart"],
+				"summary": "Get receipt for last purchase",
+				"produces": ["application/json", "text/plain; charset=utf-8"],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"example": "Your receipt is:\n1 X Milk\nCosting a total of: 8.9"
+					},
+					"401": {
+						"description": "Not logged in or not a user"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/admin/changeProduct/{id}": {
+			"put": {
+				"tags": ["admin"],
+				"description": "Permanently change an existing product's properties.",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"payload": {
+									"$ref": "#/definitions/ProductWithoutID"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
+					},
+					"401": {
+						"description": "Not logged in or not an admin"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/admin/newProduct": {
+			"post": {
+				"tags": ["admin"],
+				"description": "Save the sent payload as a new product in the database.",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"payload": {
+									"$ref": "#/definitions/ProductWithoutID"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
+					},
+					"401": {
+						"description": "Not logged in or not an admin"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/admin/{id}": {
+			"delete": {
+				"tags": ["admin"],
+				"description": "Permanently delete product from database.",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
+					},
+					"401": {
+						"description": "Not logged in or not an admin"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"User Cart": {
+			"type": "object",
+			"required": ["_id", "userID", "total", "createdAt"],
+			"properties": {
+				"_id": { "type": "string", "example": "66fffee3dfca" },
+				"userID": { "type": "integer", "format": "int32", "example": "123456782" },
+				"total": { "type": "integer", "format": "decimal", "example": "105.52" },
+				"createdAt": { "type": "string", "format": "date-time" },
+				"items": { "type": "array", "items": { "$ref": "#/definitions/User CartItem" } },
+				"orderID": { "$ref": "#/definitions/Order" }
+			}
+		},
+		"User CartWithoutOrderID": {
+			"type": "object",
+			"required": ["_id", "userID", "total", "createdAt"],
+			"properties": {
+				"_id": { "type": "string", "example": "66fffee3dfca" },
+				"userID": { "type": "integer", "format": "int32", "example": "123456782" },
+				"total": { "type": "integer", "format": "decimal", "example": "105.52" },
+				"createdAt": { "type": "string", "format": "date-time" },
+				"items": { "type": "array", "items": { "$ref": "#/definitions/User CartItem" } }
+			}
+		},
+		"User CartWithoutItems": {
+			"type": "object",
+			"required": ["_id", "userID", "total", "createdAt"],
+			"properties": {
+				"_id": { "type": "string", "example": "66fffee3dfca" },
+				"userID": { "type": "integer", "format": "int32", "example": "123456782" },
+				"total": { "type": "integer", "format": "decimal", "example": "0" },
+				"createdAt": { "type": "string", "format": "date-time" },
+				"items": { "type": "array", "example": [] }
+			}
+		},
+		"User CartItem": {
+			"type": "object",
+			"required": ["productID", "quantity", "_id"],
+			"properties": {
+				"productID": { "type": "string", "example": "66fee436fg" },
+				"quantity": { "type": "integer", "format": "int16", "example": "4" },
+				"_id": { "type": "string", "example": "66ff45d6cvb" }
+			}
+		},
+		"User": {
+			"type": "object",
+			"required": ["_id", "email", "role"],
+			"properties": {
+				"name": {
+					"type": "object",
+					"required": ["first", "last"],
+					"properties": { "first": { "type": "string", "example": "Peter" }, "last": { "type": "string", "example": "Parker" } }
+				},
+				"address": {
+					"type": "object",
+					"required": ["city", "street"],
+					"properties": {
+						"city": { "type": "string", "example": "Queens, New York City, New York" },
+						"street": { "type": "string", "example": "It's a secret 😶" }
+					}
+				},
+				"_id": { "type": "integer", "format": "int32", "example": "123456782" },
+				"email": { "type": "string", "example": "Incredible.arachnid.person@gmail.com" },
+				"role": { "type": "string", "enum": ["user", "admin"] },
+				"carts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"$ref": "#/definitions/User Cart"
+					}
+				}
+			}
+		},
+		"User WithoutOrderID": {
+			"type": "object",
+			"required": ["_id", "email", "role"],
+			"properties": {
+				"name": {
+					"type": "object",
+					"required": ["first", "last"],
+					"properties": { "first": { "type": "string", "example": "Peter" }, "last": { "type": "string", "example": "Parker" } }
+				},
+				"address": {
+					"type": "object",
+					"required": ["city", "street"],
+					"properties": {
+						"city": { "type": "string", "example": "Queens, New York City, New York" },
+						"street": { "type": "string", "example": "It's a secret 😶" }
+					}
+				},
+				"_id": { "type": "integer", "format": "int32", "example": "123456782" },
+				"email": { "type": "string", "example": "Incredible.arachnid.person@gmail.com" },
+				"role": { "type": "string", "enum": ["user", "admin"] },
+				"carts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"$ref": "#/definitions/User CartWithoutOrderID"
+					}
+				}
+			}
+		},
+		"User WithoutItems": {
+			"type": "object",
+			"required": ["_id", "email", "role"],
+			"properties": {
+				"name": {
+					"type": "object",
+					"required": ["first", "last"],
+					"properties": { "first": { "type": "string", "example": "Peter" }, "last": { "type": "string", "example": "Parker" } }
+				},
+				"address": {
+					"type": "object",
+					"required": ["city", "street"],
+					"properties": {
+						"city": { "type": "string", "example": "Queens, New York City, New York" },
+						"street": { "type": "string", "example": "It's a secret 😶" }
+					}
+				},
+				"_id": { "type": "integer", "format": "int32", "example": "123456782" },
+				"email": { "type": "string", "example": "Incredible.arachnid.person@gmail.com" },
+				"role": { "type": "string", "enum": ["user", "admin"] },
+				"carts": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"$ref": "#/definitions/User CartWithoutItems"
+					}
+				}
+			}
+		},
+		"Product": {
+			"type": "object",
+			"required": ["name", "_id", "priceInteger", "priceDecimal", "imageURL", "isInWeight"],
+			"properties": {
+				"_id": { "type": "string", "example": "66fee436fg" },
+				"categoryID": { "type": "object", "properties": { "_id": { "type": "string", "example": "Dairy & Eggs" } } },
+				"imageURL": { "type": "string", "example": "assets/Milk.png" },
+				"isInWeight": { "type": "boolean", "example": false },
+				"name": { "type": "string", "example": "Milk" },
+				"priceDecimal": { "type": "integer", "format": "int8", "example": 90 },
+				"priceInteger": { "type": "integer", "format": "int8", "example": 8 }
+			}
+		},
+		"ProductWithoutID": {
+			"type": "object",
+			"required": ["name", "priceInteger", "priceDecimal", "imageURL", "isInWeight"],
+			"properties": {
+				"categoryID": { "type": "object", "properties": { "_id": { "type": "string", "example": "Dairy & Eggs" } } },
+				"imageURL": { "type": "string", "example": "assets/Milk.png" },
+				"isInWeight": { "type": "boolean", "example": false },
+				"name": { "type": "string", "example": "Milk" },
+				"priceDecimal": { "type": "integer", "format": "int8", "example": 90 },
+				"priceInteger": { "type": "integer", "format": "int8", "example": 8 }
+			}
+		},
+		"Cart": {
+			"type": "object",
+			"required": ["_id", "userID", "total", "createdAt"],
+			"properties": {
+				"_id": { "type": "string", "example": "66fffee3dfca" },
+				"userID": { "type": "integer", "format": "int32", "example": "123456782" },
+				"total": { "type": "integer", "format": "decimal", "example": "105.52" },
+				"createdAt": { "type": "string", "format": "date-time" },
+				"items": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
+			}
+		},
+		"Order": {
+			"type": "object",
+			"required": ["_id", "lastFourCardDigits", "shipping", "dateMade"],
+			"properties": {
+				"shipping": {
+					"type": "object",
+					"properties": {
+						"city": { "type": "string", "example": "Queens, New York City, New York", "required": true },
+						"street": { "type": "string", "example": "It's a secret 😶", "required": true },
+						"date": { "type": "string", "format": "date-time", "required": true }
+					}
+				},
+				"_id": { "type": "string", "example": "66fffee3dfca" },
+				"lastFourCardDigits": { "type": "integer", "format": "int16", "example": "1234" },
+				"dateMade": { "type": "string", "format": "date-time" }
+			}
+		}
+	}
+}

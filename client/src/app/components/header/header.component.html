@@ -22,8 +22,8 @@
       <mat-form-field>
         <mat-label>Search</mat-label>
         <input matInput placeholder="Product name" id="product-search-placeholder" formControlName='query'>
-        <button mat-icon-button type="button" matSuffix>
-          <mat-icon>search</mat-icon>
+        <button [ngStyle]="{visibility:form.get('query')?.value ? 'visible' : 'hidden'}" mat-icon-button type="reset" matSuffix>
+          <mat-icon>clear</mat-icon>
         </button>
       </mat-form-field>
     </form>

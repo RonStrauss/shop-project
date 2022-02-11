@@ -16,5 +16,9 @@
     "express-session": "^1.17.2",
     "israeli-id-validator": "^1.0.1",
     "mongoose": "^6.1.2"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.18.8",
+    "swagger-ui-express": "^4.3.0"
   }
 }

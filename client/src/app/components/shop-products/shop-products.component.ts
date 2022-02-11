@@ -1,5 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ShopService } from 'src/app/services/shop.service';
 
@@ -8,21 +15,32 @@ import { ShopService } from 'src/app/services/shop.service';
   templateUrl: './shop-products.component.html',
   styleUrls: ['./shop-products.component.css'],
 })
-export class ShopProductsComponent implements OnInit {
-  constructor(public _shop: ShopService, public _auth:AuthService) {}
+export class ShopProductsComponent implements OnInit, AfterViewInit, OnDestroy {
+  constructor(public _shop: ShopService, public _auth: AuthService) {}
 
-  @Input()hide!:boolean
+  @ViewChild(MatTabGroup) tabGroup: MatTabGroup | undefined;
+  @Input() hide!: boolean;
+  tabGroupIndex = 0;
 
   ngOnInit(): void {
-        this._shop.categoryChanged.subscribe((val) => {
-      this._shop.currentViewedProducts = this._shop.products.filter(
-        (prd) => val == prd.categoryID._id
+    if (this._shop.selectedCategory !== 'Products')
+      this.tabGroupIndex = this._shop.categories.findIndex(
+        (cat) => this._shop.selectedCategory === cat
       );
-      this._shop.selectedCategory = val
+  }
+
+  ngAfterViewInit(): void {
+    this.tabGroup?.selectedTabChange.subscribe((event) => {
+      this._shop.currentViewedProducts = this._shop.products.filter(
+        (prd) => event.tab.textLabel == prd.categoryID._id
+      );
+      this._shop.selectedCategory = event.tab.textLabel;
     });
   }
 
-  emitNewCategory(event: MatTabChangeEvent) {
-    this._shop.categoryChanged.emit(event.tab.textLabel);
+  ngOnDestroy(): void {
+    this.tabGroup?.selectedTabChange.unsubscribe();
   }
+
+  // TODO add default image button for add new product
 }

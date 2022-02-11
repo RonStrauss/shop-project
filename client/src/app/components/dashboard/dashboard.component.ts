@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit {
     this._dashboard.getProductsAndOrdersNumber();
   }
 
+  // TODO change message for ongoing purchase
+
   getNotificationMessage(): string {
     if (this._auth.user?.role === 'user'){
 
