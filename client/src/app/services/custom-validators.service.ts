@@ -14,6 +14,7 @@ export class customValidators {
 
   isIsraeliIdValid(control: FormControl) {
     if (!control.value) return null;
+    if (Number(control.value) === 0) return { invalidID: true }
 
     let strId = control.value.trim();
     if (strId === '123456782') return { copiedID: true };
