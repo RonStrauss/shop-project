@@ -48,7 +48,7 @@ export class AdminDialogComponent implements OnInit {
         this.data?.priceDecimal ?? 0,
         [Validators.required, Validators.max(99), Validators.min(0)],
       ],
-      imageURL: [this.data?.imageURL ?? '', Validators.required],
+      imageURL: [this.data?.imageURL ?? '/assets/no_image_available.jpg', Validators.required],
       isInWeight: [this.data?.isInWeight ?? false, Validators.required],
     });
   }

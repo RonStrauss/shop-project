@@ -166,8 +166,6 @@ router.post('/pay', async (req, res) => {
 	}
 });
 
-// TODO make receipt accessible only after purchase
-
 router.get('/receipt', async (req, res) => {
 	try {
 		const { user } = req.session;

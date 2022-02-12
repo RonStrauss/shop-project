@@ -38,7 +38,7 @@
         <mat-card-content>
           <mat-icon>inventory_2</mat-icon><h3>Total Products Available: {{_dashboard.totalProducts}}</h3>
           <mat-icon>shopping_cart</mat-icon><h3> Total Orders So Far: {{_dashboard.totalOrders}}</h3>
-          <div class="footer" *ngIf="_auth.user" cdkFocusInitial >
+          <div class="footer" *ngIf="_auth.user" >
             {{getNotificationMessage()}}
           </div>
           </mat-card-content>

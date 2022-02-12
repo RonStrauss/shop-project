@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -109,6 +109,12 @@ export class GridProductComponent implements OnInit, OnDestroy {
     this.valueChanged = false;
   }
 
+  deleteDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogAdminComponent, {
+      data: { name: this.product.name, _id: this.product._id },
+    });
+  }
+
   editDialog(): void {
     const dialogRef = this.dialog.open(AdminDialogComponent, {
       data: this.product,
@@ -124,4 +130,28 @@ export class GridProductComponent implements OnInit, OnDestroy {
     this.valChangeSub.unsubscribe();
     this.quantityChangedSub.unsubscribe();
   }
+}
+
+@Component({
+  selector: 'app-confirm-dialog-admin',
+  template: `<mat-dialog-content
+      >Are you sure you'd like to permanently delete
+      {{ data.name }} ?</mat-dialog-content
+    ><mat-dialog-actions align="end"
+      ><button mat-button mat-dialog-close cdkFocusInitial>Cancel</button
+      ><button
+        mat-button
+        [mat-dialog-close]="true"
+        (click)="_admin.deleteProduct(data._id)"
+        color="warn"
+      >
+        Delete
+      </button></mat-dialog-actions
+    >`,
+})
+export class ConfirmDialogAdminComponent {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { name: string; _id: string },
+    public _admin: AdminService
+  ) {}
 }

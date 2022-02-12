@@ -13,7 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ShopMainComponent } from './components/shop-main/shop-main.component';
 import { ShopCartComponent } from './components/shop-cart/shop-cart.component';
 import { ShopProductsComponent } from './components/shop-products/shop-products.component';
-import { GridProductComponent } from './components/shop-products/grid-product/grid-product.component';
+import { GridProductComponent, ConfirmDialogAdminComponent } from './components/shop-products/grid-product/grid-product.component';
 import { TotalItemPipe } from './pipes/total-item.pipe';
 import { PurchaseStatusComponent } from './components/purchase-status/purchase-status.component';
 import { PurchasedItemComponent } from './components/purchase-status/purchased-item/purchased-item.component';
@@ -23,7 +23,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AdminDialogComponent } from './components/admin-dialog/admin-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent, AdminDialogComponent],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent, AdminDialogComponent,ConfirmDialogAdminComponent],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
   providers: [{provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
   bootstrap: [AppComponent],
