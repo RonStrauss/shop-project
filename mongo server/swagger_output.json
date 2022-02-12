@@ -38,7 +38,7 @@
 				"responses": {
 					"200": { "description": "Accepted credentials", "schema": { "$ref": "#/definitions/User" } },
 					"400": { "description": "Wrong Email Or Password" },
-					"500": { "description": "Internal Server Error" }
+					"500": { "description": "Internal Server Error", "schema": { "$ref": "#/definitions/Internal Server Error" } }
 				}
 			}
 		},
@@ -72,7 +72,8 @@
 						"description": "Missing both email and _id"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -121,7 +122,8 @@
 						"description": "Bad Request. Missing one of more of the values or trying to bypass distinct values"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -141,7 +143,8 @@
 						"description": "Unauthorized. You're not logged in."
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -155,7 +158,8 @@
 						"schema": { "type": "object", "properties": { "orders": { "type": "integer", "example": 4 }, "products": { "type": "integer", "example": 28 } } }
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -169,7 +173,8 @@
 						"schema": { "type": "array", "items": { "type": "string", "example": "Jerusalem" } }
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -183,7 +188,8 @@
 						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -197,7 +203,8 @@
 						"schema": { "type": "array", "items": { "type": "string", "example": "Dairy & Eggs" } }
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -219,7 +226,8 @@
 						"schema": { "type": "array", "items": { "$ref": "#/definitions/Product" } }
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -244,7 +252,8 @@
 						"description": "Invalid date received"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -275,7 +284,8 @@
 						"description": "Cart not found"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				},
 				"deprecated": true
@@ -295,7 +305,8 @@
 						"description": "Not logged in or not a user"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -319,7 +330,7 @@
 						"maximum": 50,
 						"minimum": 0,
 						"format": "int8",
-						"description": "Accepts if item is already in cart, otherwise can't be 0"
+						"description": "Accepts if item is already in cart, otherwise can't be 0. min 0 max 50"
 					}
 				],
 				"responses": {
@@ -339,7 +350,8 @@
 						"description": "Cart doesn't exist"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -363,7 +375,8 @@
 						"description": "Cart doesn't exist"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -416,7 +429,8 @@
 						"description": "Cart doesn't exist"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -434,8 +448,12 @@
 					"401": {
 						"description": "Not logged in or not a user"
 					},
+					"403": {
+						"description": "Can't view receipt for incomplete order"
+					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -472,7 +490,8 @@
 						"description": "Not logged in or not an admin"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -503,7 +522,8 @@
 						"description": "Not logged in or not an admin"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -528,7 +548,8 @@
 						"description": "Not logged in or not an admin"
 					},
 					"500": {
-						"description": "Internal Server Error"
+						"description": "Internal Server Error",
+						"schema": { "$ref": "#/definitions/Internal Server Error" }
 					}
 				}
 			}
@@ -716,6 +737,13 @@
 				"_id": { "type": "string", "example": "66fffee3dfca" },
 				"lastFourCardDigits": { "type": "integer", "format": "int16", "example": "1234" },
 				"dateMade": { "type": "string", "format": "date-time" }
+			}
+		},
+		"Internal Server Error": {
+			"type": "object",
+			"properties": {
+				"err": { "example": true },
+				"msg": { "example": "Server failed... Message Given:" }
 			}
 		}
 	}

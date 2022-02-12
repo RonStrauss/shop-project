@@ -18,8 +18,6 @@ export class PurchaseStatusComponent implements OnInit {
   order!: FormGroup;
   search!: FormGroup;
 
-  // valChanges!: Subscription;
-
   constructor(
     public _fb: FormBuilder,
     private _validators: customValidators,
@@ -27,8 +25,6 @@ export class PurchaseStatusComponent implements OnInit {
     public _auth: AuthService,
     public _lists: ListsService
   ) {}
-
-  //TODO empty searchedCart after pay
 
   ngOnInit(): void {
     this.search = this._fb.group({ query: [] });

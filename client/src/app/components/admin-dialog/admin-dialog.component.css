@@ -2,6 +2,11 @@
   width: 3rem;
 }
 
+.integer {
+  direction: rtl;
+  text-align: right;
+}
+
 span {
   margin: 0 0.4rem;
   font-size: xx-large;
@@ -9,10 +14,26 @@ span {
 }
 
 .dollar {
-    font-size: larger;
+  font-size: larger;
 }
 
 .title {
   margin: 1rem 0;
   font-size: x-large;
+}
+
+.price,.cb {
+  margin-left: 1rem;
+}
+
+.price>mat-form-field {
+  margin: 0
+}
+
+mat-form-field {
+  margin: 1rem
+}
+
+img{
+  width: 2rem;
 }

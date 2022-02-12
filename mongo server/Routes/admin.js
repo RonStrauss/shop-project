@@ -44,7 +44,7 @@ router.delete('/:id', async (req, res) => {
 		res.send(products);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed...\n' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given:' + e.message });
 	}
 });
 
@@ -65,7 +65,7 @@ router.post('/dummyCart', async (req, res) => {
 		res.send(userUpdatedWithCart);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: "Server failed... " + "Message Given: " + e.message });
+		res.status(500).send({ err: true, msg: "Server failed... Message Given: " + e.message });
 	}
 });
 

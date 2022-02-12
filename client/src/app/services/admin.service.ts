@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../interfaces/product';
 import { ShopService } from './shop.service';
 
@@ -9,7 +10,7 @@ export class AdminService {
 
   availableCategories:string[] = []
 
-  constructor(public _shop:ShopService) { }
+  constructor(public _shop:ShopService,private _snackBar: MatSnackBar) { }
 
   async getAllCategories(){
     const res = await fetch('http://localhost:1000/lists/categories',{credentials:'include'})
@@ -32,6 +33,9 @@ export class AdminService {
     const data = await res.json()
     if (!data.err){
      this._shop.setProducts(data)
+     this._snackBar.open('Product edited successfully', 'Ok',{
+      duration: 4000,
+    })
     } else {
       alert(data.msg)
     }
@@ -48,6 +52,9 @@ export class AdminService {
     const data = await res.json()
     if (!data.err){
      this._shop.setProducts(data)
+     this._snackBar.open('New product added successfully', 'Ok',{
+      duration: 4000,
+    })
     }
   }
 

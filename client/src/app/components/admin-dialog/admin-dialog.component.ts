@@ -20,7 +20,7 @@ export class AdminDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Product,
     public _shop: ShopService,
     public _validators: customValidators,
-    public _admin:AdminService
+    public _admin: AdminService
   ) {}
 
   cancelDialog(): void {
@@ -36,27 +36,17 @@ export class AdminDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._admin.getAllCategories()
+    this._admin.getAllCategories();
     this.productForm = this._fb.group({
       name: [this.data?.name ?? '', Validators.required],
       categoryID: [this.data?.categoryID?._id ?? '', Validators.required],
       priceInteger: [
         this.data?.priceInteger ?? 0,
-        [
-          Validators.required,
-          Validators.max(99999),
-          Validators.min(0),
-          this._validators.isPriceValidInteger,
-        ],
+        [Validators.required, Validators.max(99999), Validators.min(0)],
       ],
       priceDecimal: [
         this.data?.priceDecimal ?? 0,
-        [
-          Validators.required,
-          Validators.max(99),
-          Validators.min(0),
-          this._validators.isPriceValidDecimal,
-        ],
+        [Validators.required, Validators.max(99), Validators.min(0)],
       ],
       imageURL: [this.data?.imageURL ?? '', Validators.required],
       isInWeight: [this.data?.isInWeight ?? false, Validators.required],
@@ -64,10 +54,8 @@ export class AdminDialogComponent implements OnInit {
   }
 
   handleSubmit() {
-    if (this?.data?._id) {
-      this._admin.editProduct(this.productForm.value,this.data._id)
-    } else {
-      this._admin.addNewProduct(this.productForm.value)
-    }
+    this?.data?._id
+      ? this._admin.editProduct(this.productForm.value, this.data._id)
+      : this._admin.addNewProduct(this.productForm.value);
   }
 }

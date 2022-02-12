@@ -16,14 +16,14 @@
   <div class="price">
     <mat-form-field class="number">
       <mat-label>Integer</mat-label>
-      <input type="number" matInput min="0" max="99999" step="1" formControlName='priceInteger'>
-      <mat-error *ngIf="productForm.invalid">Invalid value</mat-error>
+      <input type="number" matInput min="0" max="99999" step="1" formControlName='priceInteger' class="integer" #int>
+      <mat-error *ngIf="productForm.invalid">"Illegal value"</mat-error>
     </mat-form-field>
     <span>.</span>
     <mat-form-field class="number">
       <mat-label>Decimal</mat-label>
-      <input type="number" matInput min="0" max="99" step="1" formControlName='priceDecimal'>
-      <mat-error *ngIf="productForm.invalid">Invalid value</mat-error>
+      <input type="number" matInput min="0" max="99" step="1" formControlName='priceDecimal' #dec>
+      <mat-error *ngIf="productForm.invalid">Illegal value</mat-error>
     </mat-form-field>
     <span class="dollar">
       $
@@ -31,12 +31,16 @@
   </div>
   <mat-form-field>
     <mat-label>Image URL</mat-label>
-    <input type="url" matInput formControlName='imageURL'>
+    <input type="url" matInput formControlName='imageURL' #img>
     <mat-error *ngIf="productForm.invalid">Required value</mat-error>
   </mat-form-field>
-  <mat-checkbox formControlName='isInWeight'>Sold in KGs</mat-checkbox>
+  Preview:<img [src]="img.value" alt="preview">
+  <div class="cb">
+    <mat-checkbox formControlName='isInWeight'>Sold in KGs</mat-checkbox>
+  </div>
   <div align="end">
-    <button mat-stroked-button type="submit" color="primary" [disabled]="productForm.invalid">{{getButtonMessage()}}</button>
+    <button mat-stroked-button type="submit" color="primary"
+      [disabled]="productForm.invalid">{{getButtonMessage()}}</button>
     <button mat-stroked-button color="warn" type="button" (click)="cancelDialog()">Cancel</button>
   </div>
 </form>

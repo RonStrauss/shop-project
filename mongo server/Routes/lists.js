@@ -11,7 +11,7 @@ router.get('/orders-and-products-count', async (req, res) => {
 		res.send({ orders, products });
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given: ' + e.message });
 	}
 });
 
@@ -22,7 +22,7 @@ router.get('/cities', async (req, res) => {
 		res.send(cities.map(cit => cit._id));
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given: ' + e.message });
 	}
 });
 
@@ -34,7 +34,7 @@ router.get('/products-categories', async (req, res) => {
 		res.send(products);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given: ' + e.message });
 	}
 });
 
@@ -45,7 +45,7 @@ router.get('/categories', async (req, res) => {
 		res.send(categories.map(cat => cat._id));
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given: ' + e.message });
 	}
 });
 
@@ -63,7 +63,7 @@ router.get('/product-search', async (req, res) => {
 		res.send(results);
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given: ' + e.message });
 	}
 });
 
@@ -80,7 +80,7 @@ router.get('/order', async (req, res) => {
 		res.send({ orders });
 	} catch (e) {
 		console.log(e);
-		res.status(500).send({ err: true, msg: 'Server failed... ' + 'Message Given: ' + e.message });
+		res.status(500).send({ err: true, msg: 'Server failed... Message Given: ' + e.message });
 	}
 });
 

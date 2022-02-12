@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,30 +17,35 @@ export class GridProductComponent implements OnInit, OnDestroy {
   @Input() product!: Product;
 
   quantity!: FormGroup;
-  quantityOfProduct!: number;
+  initialQuantityOfProduct!: number;
 
   valChangeSub!: Subscription;
 
   valueChanged = false;
 
+  quantityChangedSub!: Subscription;
+
   constructor(
     private _formBuilder: FormBuilder,
     public _auth: AuthService,
     public _cart: CartService,
-    public _admin:AdminService,
+    public _admin: AdminService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     if (this._auth.user) {
-      this.quantityOfProduct = Number(
+      this.initialQuantityOfProduct = Number(
         this._auth.user.carts[0]?.items.find(
           (prd) => prd.productID == this.product._id
         )?.quantity ?? false
       );
     }
     this.quantity = this._formBuilder.group({
-      number: [this.quantityOfProduct, [Validators.max(50), Validators.min(0)]],
+      number: [
+        this.initialQuantityOfProduct,
+        [Validators.max(50), Validators.min(0)],
+      ],
     });
     this.valChangeSub = this.quantity.valueChanges.subscribe((val) => {
       if (this._auth.user) {
@@ -58,6 +63,14 @@ export class GridProductComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.quantityChangedSub =
+      this._cart.acknowledgeQuantityChangedEventEmitter.subscribe(
+        (productID: string) => {
+          if (productID == 'all' || productID == this.product._id)
+            this.valueChanged =
+              this.quantity.get('number')?.value > 0 ? true : false;
+        }
+      );
   }
 
   increment() {
@@ -107,8 +120,8 @@ export class GridProductComponent implements OnInit, OnDestroy {
     });
   }
 
-
   ngOnDestroy(): void {
     this.valChangeSub.unsubscribe();
+    this.quantityChangedSub.unsubscribe();
   }
 }

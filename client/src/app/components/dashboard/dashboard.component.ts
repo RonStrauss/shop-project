@@ -17,22 +17,25 @@ export class DashboardComponent implements OnInit {
     this._dashboard.getProductsAndOrdersNumber();
   }
 
-  // TODO change message for ongoing purchase
-
   getNotificationMessage(): string {
-    if (this._auth.user?.role === 'user'){
-
+    if (this._auth.user?.role === 'user') {
       if (this._auth.user.carts.length)
-      return this._auth.user.carts[0]?.orderID
-      ? `Your last purchase was on ${new Date(
-        this._auth.user.carts[0].orderID.dateMade
-        )}`
-        : 'Please finish your opened order before opening a new cart 😃';
-        
-        return 'Welcome to your first purchase!';
-      } else {
-        return 'Welcome dear admin overlord!'
-      }
+        return this._auth.user.carts[0]?.orderID
+          ? `Your last purchase was on ${new Date(
+              this._auth.user.carts[0].orderID.dateMade
+            )}`
+          : `Your cart from ${
+              this._auth.user && this._auth.user.carts[0]
+                ? new Date(this._auth.user?.carts[0]?.createdAt).toLocaleString(
+                    'en-IL'
+                  )
+                : null
+            } is waiting for you 😊`;
+
+      return 'Welcome to your first purchase!';
+    } else {
+      return 'Welcome dear admin overlord!';
+    }
   }
 
   getPurchaseButtonMessage(): string {

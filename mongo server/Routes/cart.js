@@ -1,11 +1,10 @@
-const onlyLoggedIn = require('../HelpersExpress/onlyLoggedIn');
 const onlyUsers = require('../HelpersExpress/onlyUsers');
 const { User, ShoppingCart, Product, Order } = require('../Schemas/AllSchemas');
 const { getTotal } = require('../Schemas/HelpersSchemas');
 
 const router = require('express').Router();
 
-router.use(onlyLoggedIn);
+router.use(onlyUsers);
 
 router.put('/new', async (req, res) => {
 	try {
@@ -115,8 +114,6 @@ router.delete('/empty-cart', async (req, res) => {
 	}
 });
 
-// TODO add credit card validation
-
 router.post('/pay', async (req, res) => {
 	try {
 		const { user } = req.session;
@@ -174,6 +171,8 @@ router.post('/pay', async (req, res) => {
 router.get('/receipt', async (req, res) => {
 	try {
 		const { user } = req.session;
+
+		if (!user.carts[0].orderID) return res.status(403).send({err:true,msg:"Can't view receipt for incomplete order"})
 
 		const populatedCart = await ShoppingCart.findById(user.carts[0]._id, { __v: 0 }).populate({ path: 'items', populate: { path: 'productID' } });
 
