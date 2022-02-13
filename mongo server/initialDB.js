@@ -247,7 +247,7 @@ module.exports = async () => {
 								role: 'admin',
 							},
 							{
-								_id: 00000125,
+								_id: 00012369,
 								name: { first: 'user', last: 'user' },
 								email: 'us@er.rr',
 								address: { city: 'Jerusalem', street: "Ha'nevi'im 14" },
@@ -326,7 +326,14 @@ module.exports = async () => {
 						{ name: 'Toilet Paper', categoryID: 'Household Items', priceInteger: 15, priceDecimal: 20, imageURL: 'assets/Toilet Paper.jpg' },
 						{ name: 'Paper Cups (30)', categoryID: 'Household Items', priceInteger: 8, priceDecimal: 20, imageURL: 'assets/Paper Cup.jpg' },
 						{ name: 'Random Pills', categoryID: 'Questionable', priceInteger: 58, priceDecimal: 20, imageURL: 'assets/Pills.jpg' },
-						{ name: 'Cocaine', categoryID: 'Questionable', priceInteger: 356, priceDecimal: 42, imageURL: 'assets/Cocaine.jpg', isInWeight: true },
+						{
+							name: 'Perfectly Harmless Package',
+							categoryID: 'Questionable',
+							priceInteger: 256,
+							priceDecimal: 42,
+							imageURL: 'assets/Cocaine.jpg',
+							isInWeight: true,
+						},
 				  ]);
 			cities && admin && categories && products ? res() : rej();
 		});

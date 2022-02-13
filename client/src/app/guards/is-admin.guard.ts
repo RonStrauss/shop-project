@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -9,9 +10,11 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class IsAdminGuard implements CanActivate {
-  constructor(private _auth: AuthService, private _router: Router) {}
+  constructor(private _auth: AuthService, private _router: Router,private _snackBar: MatSnackBar) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -25,6 +28,9 @@ export class IsAdminGuard implements CanActivate {
       return true;
     } else {
       this._router.navigateByUrl('');
+      this._snackBar.open('Only an admin can access this resource', 'Ok', {
+        duration: 4000,
+      });
       return false;
     }
   }

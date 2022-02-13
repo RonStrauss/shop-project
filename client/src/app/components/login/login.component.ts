@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ShopService } from 'src/app/services/shop.service';
 
@@ -36,15 +36,13 @@ export class LoginComponent implements OnInit, OnDestroy,AfterViewInit {
     });
   }
 
-  // TODO move getProducts to cart component products.length == 0
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this._shop.getProducts();
+
+    if(!this._shop.products.length)this._shop.getProducts();
   }
 
   submit() {
-    const { email, password } = this.loginForm.value;
-    if (this.accordion)this._auth.login({ email, password }, this.accordion);
+    if (this.accordion)this._auth.login(this.loginForm.value, this.accordion);
   }
 }

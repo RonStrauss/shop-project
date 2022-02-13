@@ -16,7 +16,7 @@
         <div class="total">
           <span>Total:</span>
           <span>
-            {{(item.quantity| totalItem:item.productID.priceInteger:item.productID.priceDecimal)}}
+            {{item.productID.priceDecimal + item.productID.priceInteger ? (item.quantity| totalItem:item.productID.priceInteger:item.productID.priceDecimal) : "Free!"}}
           </span>
         </div>
         <button mat-button color="accent" (click)="_cart.updateCart(item.productID._id,0)">Remove from cart</button>

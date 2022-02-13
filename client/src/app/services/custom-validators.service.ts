@@ -17,7 +17,8 @@ export class customValidators {
     if (Number(control.value) === 0) return { invalidID: true }
 
     let strId = control.value.trim();
-    if (strId === '123456782') return { copiedID: true };
+    // TODO example ID should return invalid in prod
+    if (strId === '123456782') return null;
     if (strId.length > 9) {
       return false;
     }

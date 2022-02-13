@@ -21,9 +21,10 @@ import { HighlightPipe } from './pipes/highlight.pipe';
 import { ReceiptComponent } from './components/receipt/receipt.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AdminDialogComponent } from './components/admin-dialog/admin-dialog.component';
+import { ApiDocsComponent } from './components/api-docs/api-docs.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent, AdminDialogComponent,ConfirmDialogAdminComponent],
+  declarations: [AppComponent, HeaderComponent, DashboardComponent, LoginComponent, RegisterComponent, ShopMainComponent, ShopCartComponent, ShopProductsComponent, GridProductComponent, TotalItemPipe, PurchaseStatusComponent, PurchasedItemComponent, HighlightPipe, ReceiptComponent, AdminDialogComponent,ConfirmDialogAdminComponent, ApiDocsComponent],
   imports: [BrowserModule, AppRoutingModule, AngularMaterialModule, FormsModule, ReactiveFormsModule],
   providers: [{provide:MAT_DATE_LOCALE, useValue:'en-GB'}],
   bootstrap: [AppComponent],

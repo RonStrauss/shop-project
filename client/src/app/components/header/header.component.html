@@ -5,6 +5,7 @@
       <a *ngIf="_router.url.includes('purchase')" mat-button routerLink="../cart">Back to shop</a>
     </span>
     <button mat-button *ngIf="_auth.user" (click)="_auth.logout()">Logout</button>
+    <a routerLink="docs" mat-button>Documentation</a>
     <button mat-icon-button [matMenuTriggerFor]="contact" aria-label="Toggle Contact" matTooltip="Contact Info">
       <mat-icon>contact_support</mat-icon>
     </button>
